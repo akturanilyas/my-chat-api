@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "allowJs": true,
     "esModuleInterop": true,
     "baseUrl": "./src",
@@ -13,6 +14,7 @@
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "moduleResolution": "node",
+    "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true
   },
   "compileOnSave": true,
