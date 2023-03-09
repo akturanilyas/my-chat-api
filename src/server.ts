@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import environment from './builders/envBuilder';
+import environment from './builders/env.builder';
 
 export const app = express();
 
@@ -7,11 +7,11 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello world');
 });
 
-// TODO: Route Builder
-
 const httpServer = app
-  .listen(environment.port, () => {}) //   Fix the Error EADDRINUSE
-  .on('error', err => {
+  .listen(environment.port, () => {
+    //
+  }) //   Fix the Error EADDRINUSE
+  .on('error', () => {
     process.once('SIGUSR2', () => {
       process.kill(process.pid, 'SIGUSR2');
     });

@@ -1,6 +1,6 @@
 import { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions';
 import * as process from 'process';
-import environment from '../builders/envBuilder';
+import environment from '../builders/env.builder';
 
 const ormConfig: DataSourceOptions = {
   type: 'mysql',

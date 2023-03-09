@@ -52,6 +52,7 @@ module.exports = {
         'import/no-cycle': ['off'],
         radix: 'off',
         'import/prefer-default-export': 'off',
+        'no-unused-expressions': 'off',
         "no-restricted-imports": ["error", "import1", "import2"]
     }
 };
