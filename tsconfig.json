@@ -5,9 +5,9 @@
     "esModuleInterop": true,
     "baseUrl": "./src",
     "module": "NodeNext",
-    "target": "es5",
+    "target": "es6",
     "lib": [
-      "es2021"
+      "ESNext"
     ],
     "outDir": "build",
     "strict": true,

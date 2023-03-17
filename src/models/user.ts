@@ -34,5 +34,5 @@ export class User extends AbstractModel {
   age?: number;
 
   @OneToMany(() => UsersChats, usersChats => usersChats.user)
-  userChats: UsersChats;
+  userChats?: UsersChats;
 }
