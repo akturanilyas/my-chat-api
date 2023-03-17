@@ -1,15 +1,15 @@
 import express, { Request, Response } from 'express';
-import environment from './builders/env.builder';
+import * as console from 'console';
+import environment from './builders/envBuilder';
 
 export const app = express();
-
-app.get('/', (req: Request, res: Response) => {
+app.get(`/api`, (req: Request, res: Response) => {
   res.send('Hello world');
 });
 
 const httpServer = app
-  .listen(environment.port, () => {
-    //
+  .listen(environment.port, async () => {
+    console.log(`listening on port ${environment.port}`);
   }) //   Fix the Error EADDRINUSE
   .on('error', () => {
     process.once('SIGUSR2', () => {

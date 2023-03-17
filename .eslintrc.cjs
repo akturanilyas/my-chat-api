@@ -47,12 +47,14 @@ module.exports = {
                 'ignoreStrings': true
             }
         ],
-        'import/no-extraneous-dependencies': ["error", {"devDependencies": true}],
-        '@typescript-eslint/no-explicit-any': "off",
+        'import/no-extraneous-dependencies': ['error', {'devDependencies': true}],
+        '@typescript-eslint/no-explicit-any': 'error',
         'import/no-cycle': ['off'],
+        'class-methods-use-this': 'off',
         radix: 'off',
         'import/prefer-default-export': 'off',
         'no-unused-expressions': 'off',
-        "no-restricted-imports": ["error", "import1", "import2"]
+        'no-restricted-imports': ['error', 'import1', 'import2'],
+        'camelcase': 'off',
     }
 };

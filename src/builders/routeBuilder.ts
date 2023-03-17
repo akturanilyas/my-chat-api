@@ -27,18 +27,24 @@ const buildController = async (app: Express) => {
         // route.validate && params.push(route.validate);
 
         const methodFunction = (req: Request, res: Response, next: NextFunction) => {
-          const errors = validationResult(req);
+          try {
+            const errors = validationResult(req);
 
-          if (errors.isEmpty()) {
-            return route.handler(req, res, next);
+            if (errors.isEmpty()) {
+              return route.handler(req, res, next);
+            }
+
+            return res.status(400).json({ errors: errors.array() });
+          } catch (e) {
+            next(e);
           }
-
-          return res.status(400).json({ errors: errors.array() });
         };
 
         params.push(methodFunction);
 
         app[route.method as string](...params);
+
+        console.log({ path: route.path, method: route.method });
       });
     }
   }
