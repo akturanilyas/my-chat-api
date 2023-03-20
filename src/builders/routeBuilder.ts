@@ -26,7 +26,11 @@ const buildController = async (app: Express) => {
         // TODO Validation implementation
         // route.validate && params.push(route.validate);
 
-        const methodFunction = (req: Request, res: Response, next: NextFunction) => {
+        const methodFunction = (
+          req: Request,
+          res: Response,
+          next: NextFunction,
+        ): unknown => {
           try {
             const errors = validationResult(req);
 
@@ -36,7 +40,7 @@ const buildController = async (app: Express) => {
 
             return res.status(400).json({ errors: errors.array() });
           } catch (e) {
-            next(e);
+            return next(e);
           }
         };
 

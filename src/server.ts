@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import * as console from 'console';
 import environment from './builders/envBuilder';
+import { routeBuilder } from './builders/routeBuilder';
 
 export const app = express();
 app.get(`/api`, (req: Request, res: Response) => {
@@ -9,6 +10,7 @@ app.get(`/api`, (req: Request, res: Response) => {
 
 const httpServer = app
   .listen(environment.port, async () => {
+    await routeBuilder(app);
     console.log(`listening on port ${environment.port}`);
   }) //   Fix the Error EADDRINUSE
   .on('error', () => {

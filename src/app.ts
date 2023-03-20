@@ -11,7 +11,6 @@ const connectionSource: DataSource = new DataSource(ormConfig);
 (async () => {
   await new DatabaseService(connectionSource).initialize();
   await httpServer;
-  await routeBuilder(app);
   await socket();
   await jobs();
 })();

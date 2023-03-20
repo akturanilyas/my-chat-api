@@ -1,18 +1,18 @@
-import supertest from 'supertest';
-import { expect } from 'chai';
-import { app } from '../../server';
+import request from 'supertest';
+import { assert } from 'chai';
+import server, { app } from '../../server';
 import { ENDPOINT } from '../../constants/endpoint.constant';
 
-const request = supertest(app);
-describe('App', () => {
+describe('AuthController', () => {
   it('Check /register endpoint', async () => {
-    try {
-      const res = await request.post(`/api${ENDPOINT.AUTH}${ENDPOINT.REGISTER}`);
+    const res = await request(app).post(`/api${ENDPOINT.AUTH}${ENDPOINT.REGISTER}`);
 
-      expect(res.text).to.be.equal(200);
-      expect(res.status).to.be.equal(200);
-    } catch (e) {
-      console.log(e);
-    }
+    await assert(res.statusCode, '200');
+  });
+
+  it('check index page', async () => {
+    const response = await request(server).get('/').timeout(3000);
+
+    assert.strictEqual(response.status, 200);
   });
 });

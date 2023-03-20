@@ -1,17 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
+import { setTimeout } from "timers/promises";
 import BaseController from './baseController';
 import { AuthService } from '../services/authService';
-import { User } from '../models/user';
 
 export default class AuthController extends BaseController {
   static async register(req: Request, res: Response): Promise<Response> {
-    User.create({
-      last_name: 'asd',
-      first_name: 'asd',
-      password: 'asdmasd',
-      email: 'asdasd',
-    });
-
     const user = await new AuthService().register({
       user: { ...req.body },
     });
