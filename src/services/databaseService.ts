@@ -10,8 +10,4 @@ export class DatabaseService {
   public async initialize(): Promise<void> {
     await this.source.initialize();
   }
-
-  public async destroy(): Promise<void> {
-    await this.source.destroy();
-  }
 }
