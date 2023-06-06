@@ -5,13 +5,13 @@ import { DatabaseService } from '../../services/databaseService';
 import connectionSource from '../../app';
 
 describe('AuthService', () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     await new DatabaseService(connectionSource).initialize();
   });
 
   test('Check /register service', async () => {
     const user = {
-      email: 'email2@gmail.com',
+      email: 'email3@gmail.com',
       password: 'password123.',
       age: 12,
       last_name: 'lastname',
