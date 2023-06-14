@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { setTimeout } from "timers/promises";
+import { setTimeout } from 'timers/promises';
 import BaseController from './baseController';
 import { AuthService } from '../services/authService';
 

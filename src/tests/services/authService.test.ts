@@ -1,9 +1,9 @@
+import { faker } from '@faker-js/faker';
 import { describe, expect, test } from '@jest/globals';
+import connectionSource from '../../app';
+import { User } from '../../models/user';
 import { AuthService } from '../../services/authService';
 import { DatabaseService } from '../../services/databaseService';
-import connectionSource from '../../app';
-import { faker } from '@faker-js/faker';
-import { User } from '../../models/user';
 
 describe('AuthService', () => {
   const service = new DatabaseService(connectionSource);
