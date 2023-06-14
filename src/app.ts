@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express, { Request, Response } from 'express';
 import { routeBuilder } from './builders/routeBuilder';
+import { errorHandler, notFoundError } from './middlewares/errors.middleware';
 
 export const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -12,6 +13,6 @@ app.get(`/api`, (req: Request, res: Response) => {
 });
 
 routeBuilder(app).then(() => {
-  // app.use(notFoundError);
-  // app.use(errorHandler);
+  app.use(notFoundError);
+  app.use(errorHandler);
 });
