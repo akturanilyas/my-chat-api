@@ -1,18 +1,17 @@
-import { DataSource } from 'typeorm';
-import socket from './socket';
-import jobs from './jobs';
-import { DatabaseService } from './services/databaseService';
-import httpServer, { app } from './server';
+import cors from 'cors';
+import express, { Request, Response } from 'express';
 import { routeBuilder } from './builders/routeBuilder';
-import ormConfig from './config/ormConfig';
 
-const connectionSource: DataSource = new DataSource(ormConfig);
+export const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 }));
 
-(async () => {
-  await new DatabaseService(connectionSource).initialize();
-  await httpServer;
-  await socket();
-  await jobs();
-})();
+app.get(`/api`, (req: Request, res: Response) => {
+  res.send('Hello world');
+});
 
-export default connectionSource;
+routeBuilder(app).then(() => {
+  // app.use(notFoundError);
+  // app.use(errorHandler);
+});

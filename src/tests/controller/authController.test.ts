@@ -2,9 +2,9 @@ import { faker } from '@faker-js/faker';
 import { describe } from '@jest/globals';
 import * as assert from 'assert';
 import request from 'supertest';
-import connectionSource from '../../app';
+import { app } from '../../app';
 import { ENDPOINT } from '../../constants/endpoint.constant';
-import { app } from '../../server';
+import { connectionSource } from '../../server';
 import { DatabaseService } from '../../services/databaseService';
 
 describe('AuthController', () => {
@@ -25,7 +25,7 @@ describe('AuthController', () => {
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json');
 
-    assert.strictEqual(res.text, '200');
+    expect(res.statusCode).toBe(200)
   });
 
   it('check index page', async () => {

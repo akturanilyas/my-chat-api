@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, test } from '@jest/globals';
-import connectionSource from '../../app';
 import { User } from '../../models/user';
+import { connectionSource } from '../../server';
 import { AuthService } from '../../services/authService';
 import { DatabaseService } from '../../services/databaseService';
 
@@ -21,9 +21,7 @@ describe('AuthService', () => {
       username: faker.internet.userName(),
     };
 
-    const res = await new AuthService().register({
-      user,
-    });
+    const res = await new AuthService().register({ user });
 
     await expect(res).toBeInstanceOf(User);
   });

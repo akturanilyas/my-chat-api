@@ -1,16 +1,16 @@
-import express, { Request, Response } from 'express';
 import * as console from 'console';
+import { DataSource } from 'typeorm';
+import { app } from './app';
 import environment from './builders/envBuilder';
-import { routeBuilder } from './builders/routeBuilder';
+import ormConfig from './config/ormConfig';
+import jobs from './jobs';
+import { DatabaseService } from './services/databaseService';
+import socket from './socket';
 
-export const app = express();
-app.get(`/api`, (req: Request, res: Response) => {
-  res.send('Hello world');
-});
+export const connectionSource: DataSource = new DataSource(ormConfig);
 
 const httpServer = app
   .listen(environment.port, async () => {
-    await routeBuilder(app);
     console.log(`listening on port ${environment.port}`);
   }) //   Fix the Error EADDRINUSE
   .on('error', () => {
@@ -22,5 +22,12 @@ const httpServer = app
       process.kill(process.pid, 'SIGINT');
     });
   });
+
+(async () => {
+  await new DatabaseService(connectionSource).initialize();
+  await httpServer;
+  await socket();
+  await jobs();
+})();
 
 export default httpServer;

@@ -1,7 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
-import { setTimeout } from 'timers/promises';
-import BaseController from './baseController';
+import { Request, Response } from 'express';
 import { AuthService } from '../services/authService';
+import BaseController from './baseController';
 
 export default class AuthController extends BaseController {
   static async register(req: Request, res: Response): Promise<Response> {
@@ -12,11 +11,7 @@ export default class AuthController extends BaseController {
     return res.status(200).json({ data: user });
   }
 
-  static async loginUser(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<Response> {
+  static async loginUser(req: Request, res: Response): Promise<Response> {
     return res.status(200).json({ login: 'user' });
   }
 }
