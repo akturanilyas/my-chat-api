@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 
-export class AbstractResource {
+export abstract class AbstractResource {
   public statusCode: number;
 
   public message: string;
@@ -12,16 +12,13 @@ export class AbstractResource {
     message,
     resource,
   }: {
-    statusCode: number;
-    message: string;
-    resource: object;
+    statusCode?: number;
+    message?: string;
+    resource?: object;
   }) {
-    this.resource = resource;
-    this.statusCode = statusCode;
-    this.message = message;
-
-    this.resource = this.toArray(this.toJson());
-    const a = 2;
+    this.resource = resource || {};
+    this.statusCode = statusCode || 200;
+    this.message = message || '';
   }
 
   protected toJson = (): object => {

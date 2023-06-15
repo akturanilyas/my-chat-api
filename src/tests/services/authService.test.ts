@@ -7,6 +7,7 @@ import { DatabaseService } from '../../services/databaseService';
 
 describe('AuthService', () => {
   const service = new DatabaseService(connectionSource);
+
   beforeAll(async () => {
     await service.initialize();
   });

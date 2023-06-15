@@ -9,10 +9,9 @@ export default class AuthController extends BaseController {
       user: { ...req.body },
     });
 
-    const a = new RegisterResource({ statusCode: 200, message: 'ilyas', resource: user });
-    console.log(a);
+    const resource = new RegisterResource({ resource: user });
 
-    return res.status(200).json(a);
+    return res.status(201).json(resource.toJson());
   }
 
   static async loginUser(req: Request, res: Response): Promise<Response> {

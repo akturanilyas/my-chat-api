@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker';
 import { describe } from '@jest/globals';
-import * as assert from 'assert';
 import request from 'supertest';
 import { app } from '../../app';
 import { ENDPOINT } from '../../constants/endpoint.constant';
@@ -25,13 +24,12 @@ describe('AuthController', () => {
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json');
 
-    expect(res.statusCode).toBe(200);
-    expect(res).toBe(200);
+    expect(res.statusCode).toBe(201);
   });
 
   it('check index page', async () => {
     const response = await request(app).get('/api');
 
-    assert.strictEqual(response.status, 200);
+    expect(response.status).toBe(200);
   });
 });

@@ -2,7 +2,15 @@ import { User } from '../models/user';
 import { AbstractResource } from './abstractResource';
 
 export class RegisterResource extends AbstractResource {
-  resource: User;
+  public toJson = (): object => {
+    const user = this.resource as User;
 
-  toJson = (): object => ({ akturan: 61 });
+    return {
+      first_name: user.first_name,
+      last_name: user.last_name,
+      username: user.username,
+      email: user.email,
+      age: user.age,
+    };
+  };
 }

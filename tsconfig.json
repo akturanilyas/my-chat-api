@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "experimentalDecorators": true,
     "allowJs": true,
     "esModuleInterop": true,
@@ -22,8 +23,9 @@
     "src/**/*"
   ],
   "exclude": [
+    "*.d.ts",
     "node_modules",
-    "generated.ts",
-    "*.d.ts"
+    "./node_modules",
+    "./node_modules/**"
   ]
 }

@@ -1,9 +1,9 @@
-import path from 'path';
-import * as fs from 'fs';
 import { Express, NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import { IRoute } from '../routes/IRoute.interface';
+import * as fs from 'fs';
+import path from 'path';
 import { Middleware } from '../enums/middleware';
+import { IRoute } from '../routes/IRoute.interface';
 
 const routeDir = path.join(process.cwd(), 'src/routes');
 
