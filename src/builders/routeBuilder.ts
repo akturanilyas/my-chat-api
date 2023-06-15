@@ -10,10 +10,8 @@ const routeDir = path.join(process.cwd(), 'src/routes');
 const getMiddlewares = (middlewares: Array<Middleware>): [] => [];
 
 const buildController = async (app: Express) => {
-  // eslint-disable-next-line no-restricted-syntax
   for (const fileName of fs.readdirSync(routeDir)) {
     if (!fileName.endsWith('interface.ts')) {
-      // eslint-disable-next-line no-await-in-loop
       const { routes } = await import(`${routeDir}/${fileName}`);
 
       (routes as Array<IRoute>).forEach((route: IRoute) => {

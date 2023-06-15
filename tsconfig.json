@@ -18,9 +18,12 @@
     "forceConsistentCasingInFileNames": true
   },
   "compileOnSave": true,
+  "ts-node": {
+    "esm": true
+  },
   "include": [
-    "src/**/*",
-    "node_modules/ts-jest/globals.d.ts",
+    "src/**/*.ts",
+    "node_modules/ts-jest/globals.d.ts"
   ],
   "exclude": [
     "node_modules"
