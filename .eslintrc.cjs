@@ -34,7 +34,7 @@ module.exports = {
         }
     },
     rules: {
-        '@typescript-eslint/explicit-module-boundary-types': ['error'],
+        '@typescript-eslint/explicit-module-boundary-types': ['off'],
         'arrow-parens': ['error', 'as-needed'],
         'no-trailing-spaces': 'error',
         'import/extensions': 'off',

@@ -1,7 +1,7 @@
 import * as console from 'console';
 import { DataSource } from 'typeorm';
-import { app } from './app';
 import environment from './builders/envBuilder';
+import { app } from './app';
 import ormConfig from './config/ormConfig';
 import jobs from './jobs';
 import { DatabaseService } from './services/databaseService';

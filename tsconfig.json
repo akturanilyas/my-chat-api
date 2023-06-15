@@ -4,7 +4,7 @@
     "allowJs": true,
     "esModuleInterop": true,
     "baseUrl": "./src",
-    "module": "ESNext",
+    "module": "NodeNext",
     "target": "es6",
     "lib": [
       "ESNext"
@@ -19,10 +19,11 @@
   },
   "compileOnSave": true,
   "include": [
-    "src/**/*",
-    "node_modules/ts-jest/globals.d.ts",
+    "src/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "generated.ts",
+    "*.d.ts"
   ]
 }

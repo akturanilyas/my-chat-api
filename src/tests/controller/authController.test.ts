@@ -13,9 +13,9 @@ describe('AuthController', () => {
     const params = {
       password: faker.internet.password(),
       username: faker.internet.userName(),
-      first_name: faker.name.firstName(),
+      first_name: faker.person.firstName(),
       email: faker.internet.email(),
-      last_name: faker.name.lastName(),
+      last_name: faker.person.lastName(),
       age: 12,
     };
 
@@ -25,7 +25,8 @@ describe('AuthController', () => {
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json');
 
-    expect(res.statusCode).toBe(200)
+    expect(res.statusCode).toBe(200);
+    expect(res).toBe(200);
   });
 
   it('check index page', async () => {
