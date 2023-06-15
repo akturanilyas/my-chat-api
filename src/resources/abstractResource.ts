@@ -21,7 +21,7 @@ export class AbstractResource {
     this.message = message;
 
     this.resource = this.toArray(this.toJson());
-    const a =2
+    const a = 2;
   }
 
   protected toJson = (): object => {
