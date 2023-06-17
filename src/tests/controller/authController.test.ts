@@ -27,9 +27,23 @@ describe('AuthController', () => {
     expect(res.statusCode).toBe(201);
   });
 
-  it('check index page', async () => {
-    const response = await request(app).get('/api');
+  it('check login endpoint', async () => {
+    await new DatabaseService(connectionSource).initialize();
+    const params = {
+      password: faker.internet.password(),
+      username: faker.internet.userName(),
+      first_name: faker.person.firstName(),
+      email: faker.internet.email(),
+      last_name: faker.person.lastName(),
+      age: 12,
+    };
 
-    expect(response.status).toBe(200);
+    const res = await request(app)
+      .post(`/api${ENDPOINT.AUTH}${ENDPOINT.LOGIN}`)
+      .send(params)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
+
+    expect(res.statusCode).toBe(201);
   });
 });

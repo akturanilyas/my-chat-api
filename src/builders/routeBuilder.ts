@@ -1,5 +1,5 @@
 import { Express, NextFunction, Request, Response } from 'express';
-import { validationResult } from 'express-validator';
+import { checkSchema, validationResult } from 'express-validator';
 import * as fs from 'fs';
 import path from 'path';
 import { Middleware } from '../enums/middleware';
@@ -32,6 +32,8 @@ const buildController = async (app: Express) => {
           try {
             const errors = validationResult(req);
 
+            const errors2 = route.validate && checkSchema(route.validate);
+            console.log(errors2?.length);
             if (errors.isEmpty()) {
               return route.handler(req, res, next);
             }
