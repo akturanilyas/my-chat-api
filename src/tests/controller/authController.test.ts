@@ -33,7 +33,6 @@ describe('AuthController', () => {
       password: faker.internet.password(),
       username: faker.internet.userName(),
       first_name: faker.person.firstName(),
-      email: faker.internet.email(),
       last_name: faker.person.lastName(),
       age: 12,
     };
@@ -44,6 +43,6 @@ describe('AuthController', () => {
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json');
 
-    expect(res.statusCode).toBe(201);
+    expect(res).toBe(201);
   });
 });

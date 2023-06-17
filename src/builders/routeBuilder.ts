@@ -1,6 +1,7 @@
 import { Express, NextFunction, Request, Response } from 'express';
-import { checkSchema, validationResult } from 'express-validator';
+import { checkSchema } from 'express-validator';
 import * as fs from 'fs';
+import { map } from 'lodash';
 import path from 'path';
 import { Middleware } from '../enums/middleware';
 import { IRoute } from '../routes/IRoute.interface';
@@ -24,24 +25,20 @@ const buildController = async (app: Express) => {
         // TODO Validation implementation
         // route.validate && params.push(route.validate);
 
-        const methodFunction = (
+        const methodFunction = async (
           req: Request,
           res: Response,
           next: NextFunction,
-        ): unknown => {
-          try {
-            const errors = validationResult(req);
+        ): Promise<unknown> => {
+          if (route.validate) {
+            const errors = await checkSchema(route.validate, ['body']).run(req);
 
-            const errors2 = route.validate && checkSchema(route.validate);
-            console.log(errors2?.length);
-            if (errors.isEmpty()) {
-              return route.handler(req, res, next);
+            if (map(errors, 'errors')) {
+              return res.status(400).json({ errors: map(errors, 'errors') });
             }
-
-            return res.status(400).json({ errors: errors.array() });
-          } catch (e) {
-            return next(e);
           }
+
+          return route.handler(req, res, next).catch(next);
         };
 
         params.push(methodFunction);

@@ -11,7 +11,7 @@ const ormConfig: DataSourceOptions = {
   synchronize: true,
   migrationsTableName: 'migrations',
   logging: environment.debugEnabled,
-  logger: environment.logType,
+  logger: 'file',
   entities: ['src/models/**/*.ts', 'dist/models/**/*.js'],
   subscribers: ['src/subscriber/**/*{.ts,.js}'],
   migrations: ['src/migrations/**/*{.ts,.js}'],
