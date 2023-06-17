@@ -33,7 +33,11 @@ const buildController = async (app: Express) => {
           if (route.validate) {
             const errors = await checkSchema(route.validate, ['body']).run(req);
 
-            if (map(errors, 'errors')) {
+            if (
+              map(errors, 'errors')
+                .map(item => Boolean(item.length))
+                .includes(true)
+            ) {
               return res.status(400).json({ errors: map(errors, 'errors') });
             }
           }
