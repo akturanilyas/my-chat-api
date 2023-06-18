@@ -26,4 +26,19 @@ describe('AuthService', () => {
 
     await expect(res).toBeInstanceOf(User);
   });
+
+  test('Check /register service', async () => {
+    const user = {
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      age: 12,
+      last_name: faker.person.lastName(),
+      first_name: faker.person.firstName(),
+      username: faker.internet.userName(),
+    };
+
+    const res = await new AuthService().register({ user });
+
+    await expect(res).toBeInstanceOf(User);
+  });
 });

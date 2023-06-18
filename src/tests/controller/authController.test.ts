@@ -18,6 +18,7 @@ describe('AuthController', () => {
       age: 12,
     };
 
+    // TODO: [AKTURAN] Move it to testUtil
     const res = await request(app)
       .post(`/api${ENDPOINT.AUTH}${ENDPOINT.REGISTER}`)
       .send(params)
@@ -29,12 +30,28 @@ describe('AuthController', () => {
 
   it('check login endpoint', async () => {
     await new DatabaseService(connectionSource).initialize();
-    const params = {
-      password: faker.internet.password(),
+
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+
+    const registerParams = {
+      password,
       username: faker.internet.userName(),
       first_name: faker.person.firstName(),
+      email,
       last_name: faker.person.lastName(),
       age: 12,
+    };
+
+    const a = await request(app)
+      .post(`/api${ENDPOINT.AUTH}${ENDPOINT.REGISTER}`)
+      .send(registerParams)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
+
+    const params = {
+      password,
+      email,
     };
 
     const res = await request(app)
@@ -43,6 +60,6 @@ describe('AuthController', () => {
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json');
 
-    expect(res).toBe(201);
+    expect(res.text).toBe(201);
   });
 });

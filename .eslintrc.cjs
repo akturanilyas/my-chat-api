@@ -56,6 +56,7 @@ module.exports = {
     'no-restricted-imports': ['error', 'import1', 'import2'],
     'camelcase': 'off',
     'no-await-in-loop': 'off',
-    'no-restricted-syntax': 'off'
+    'no-restricted-syntax': 'off',
+    'eol-last': ['error', 'always']
   }
 };

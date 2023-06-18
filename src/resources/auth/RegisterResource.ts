@@ -1,5 +1,5 @@
-import { User } from '../models/user';
-import { AbstractResource } from './abstractResource';
+import { User } from '../../models/user';
+import { AbstractResource } from '../AbstractResource';
 
 export class RegisterResource extends AbstractResource {
   public toJson = (): object => {

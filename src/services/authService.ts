@@ -1,9 +1,10 @@
-import { BadRequest } from '@curveball/http-errors';
-import { genSalt, hash } from 'bcrypt';
+import { BadRequest, Unauthorized } from '@curveball/http-errors';
+import { compare, genSalt, hash } from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { User } from '../models/user';
+import environment from '../builders/envBuilder';
 
-type UserDto = {
+type RegisterInterface = {
   password: string;
   username: string;
   first_name: string;
@@ -13,7 +14,7 @@ type UserDto = {
 };
 
 export class AuthService {
-  async register({ user }: { user: UserDto }): Promise<User> {
+  async register({ user }: { user: RegisterInterface }): Promise<User> {
     const userWithEmail: User | null = await User.findOne({
       where: { email: user.email },
     });
@@ -30,6 +31,16 @@ export class AuthService {
 
     return registeredUser;
   }
+
+  login = async ({ email, password }: { email: string; password: string }) => {
+    const user = await User.findOneBy({ email });
+    if (!user) throw new Unauthorized('Kullanici bulunamadi');
+
+    const validPass = await compare(password, user.password);
+    if (!validPass) throw new Unauthorized('Şifre veya E-mail yanlış');
+
+    return { ...user, token: jwt.sign({ id: user.id }, environment.jwt_token) };
+  };
 
   getUserIdByToken = (token: string): string => {
     const jwtPayload = jwt.verify(token, process.env.SECRET_JWT as string);

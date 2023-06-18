@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import { RegisterResource } from '../resources/registerResource';
+import { RegisterResource } from '../resources/auth/RegisterResource';
 import { AuthService } from '../services/authService';
-import BaseController from './baseController';
+import BaseController from './BaseController';
+import { LoginResource } from '../resources/auth/LoginResource';
 
 export default class AuthController extends BaseController {
   static async register(req: Request, res: Response): Promise<Response> {
@@ -15,6 +16,10 @@ export default class AuthController extends BaseController {
   }
 
   static async loginUser(req: Request, res: Response): Promise<Response> {
-    return res.status(200).json({ login: 'user' });
+    const user = await new AuthService().login(req.body);
+
+    const resource = new LoginResource({ resource: user });
+
+    return res.status(201).json(resource.toJson());
   }
 }
