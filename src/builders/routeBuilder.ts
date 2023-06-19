@@ -10,6 +10,25 @@ const routeDir = path.join(process.cwd(), 'src/routes');
 
 const getMiddlewares = (middlewares: Array<Middleware>): [] => [];
 
+const generateMethodFunction =
+  (route: IRoute) =>
+  async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {
+    if (route.validate) {
+      const errors = await checkSchema(route.validate, ['body']).run(req);
+
+      // TODO: [AKTURAN] handle errors
+      if (
+        map(errors, 'errors')
+          .map(item => Boolean(item.length))
+          .includes(true)
+      ) {
+        return res.status(400).json({ errors: map(errors, 'errors') });
+      }
+    }
+
+    return route.handler(req, res, next).catch(next);
+  };
+
 const buildController = async (app: Express) => {
   for (const fileName of fs.readdirSync(routeDir)) {
     if (!fileName.endsWith('interface.ts')) {
@@ -22,25 +41,7 @@ const buildController = async (app: Express) => {
 
         route.middlewares && params.push(getMiddlewares(route.middlewares));
 
-        const methodFunction = async (
-          req: Request,
-          res: Response,
-          next: NextFunction,
-        ): Promise<unknown> => {
-          if (route.validate) {
-            const errors = await checkSchema(route.validate, ['body']).run(req);
-
-            if (
-              map(errors, 'errors')
-                .map(item => Boolean(item.length))
-                .includes(true)
-            ) {
-              return res.status(400).json({ errors: map(errors, 'errors') });
-            }
-          }
-
-          return route.handler(req, res, next).catch(next);
-        };
+        const methodFunction = generateMethodFunction(route);
 
         params.push(methodFunction);
 
