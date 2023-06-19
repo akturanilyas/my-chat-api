@@ -1,4 +1,4 @@
-import {HttpErrorBase} from "@curveball/http-errors/src";
+import { HttpErrorBase } from '@curveball/http-errors/src';
 
 export class UserAlreadyExistsException extends HttpErrorBase {
   httpStatus = 409;

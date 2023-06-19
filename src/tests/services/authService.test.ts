@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect } from '@jest/globals';
 import { User } from '../../models/user';
 import { connectionSource } from '../../server';
-import { AuthService } from '../../services/authService';
+import { AuthService } from '../../services/AuthService';
 import { DatabaseService } from '../../services/databaseService';
 
 describe('AuthService', () => {

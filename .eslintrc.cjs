@@ -58,6 +58,8 @@ module.exports = {
     'no-await-in-loop': 'off',
     'no-restricted-syntax': 'off',
     'eol-last': ['error', 'always'],
-    'lines-between-class-members': 'off'
+    'lines-between-class-members': 'off',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'warn'
   }
 };
