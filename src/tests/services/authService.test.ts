@@ -27,7 +27,7 @@ describe('AuthService', () => {
     await expect(res).toBeInstanceOf(User);
   });
 
-  it('Check /register service', async () => {
+  it('Check /login service', async () => {
     const user = {
       email: faker.internet.email(),
       password: faker.internet.password(),

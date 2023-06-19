@@ -1,6 +1,4 @@
-import { HttpErrorBase } from '@curveball/http-errors/src';
-
-export class PasswordMismatchException extends HttpErrorBase {
+export class PasswordMismatchException extends Error {
   httpStatus = 401;
   title = 'User not found';
 }

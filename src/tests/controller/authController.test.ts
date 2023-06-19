@@ -5,6 +5,7 @@ import { app } from '../../app';
 import { ENDPOINT } from '../../constants/endpoint.constant';
 import { connectionSource } from '../../server';
 import { DatabaseService } from '../../services/databaseService';
+import { postRequest } from '../../utils/testUtils';
 
 describe('AuthController', () => {
   it('Check /register endpoint', async () => {
@@ -18,12 +19,10 @@ describe('AuthController', () => {
       age: 12,
     };
 
-    // TODO: [AKTURAN] Move it to testUtil
-    const res = await request(app)
-      .post(`/api${ENDPOINT.AUTH}${ENDPOINT.REGISTER}`)
-      .send(params)
-      .set('Content-Type', 'application/json')
-      .set('Accept', 'application/json');
+    const res = await postRequest({
+      body: params,
+      path: `/api${ENDPOINT.AUTH}${ENDPOINT.REGISTER}`,
+    });
 
     expect(res.statusCode).toBe(201);
   });
@@ -43,7 +42,7 @@ describe('AuthController', () => {
       age: 12,
     };
 
-    const a = await request(app)
+    await request(app)
       .post(`/api${ENDPOINT.AUTH}${ENDPOINT.REGISTER}`)
       .send(registerParams)
       .set('Content-Type', 'application/json')
@@ -54,11 +53,10 @@ describe('AuthController', () => {
       email,
     };
 
-    const res = await request(app)
-      .post(`/api${ENDPOINT.AUTH}${ENDPOINT.LOGIN}`)
-      .send(params)
-      .set('Content-Type', 'application/json')
-      .set('Accept', 'application/json');
+    const res = await postRequest({
+      body: params,
+      path: `/api${ENDPOINT.AUTH}${ENDPOINT.LOGIN}`,
+    });
 
     expect(res.text).toBe(201);
   });

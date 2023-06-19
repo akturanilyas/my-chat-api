@@ -1,6 +1,4 @@
-import { HttpErrorBase } from '@curveball/http-errors/src';
-
-export class UserNotFoundException extends HttpErrorBase {
+export class UserNotFoundException extends Error {
   httpStatus = 404;
   title = 'User not found';
 }
