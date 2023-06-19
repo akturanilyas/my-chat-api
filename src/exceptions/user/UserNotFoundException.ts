@@ -1,4 +1,6 @@
-export class UserNotFoundException extends Error {
+import { AbstractException } from '../AbstractException.abstract';
+
+export class UserNotFoundException extends AbstractException {
   httpStatus = 404;
-  title = 'User not found';
+  message = 'User not found';
 }
