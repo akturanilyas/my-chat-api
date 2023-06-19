@@ -1,5 +1,5 @@
 import { ENDPOINT } from '../constants/endpoint.constant';
-import AuthController from '../controllers/authController';
+import AuthController from '../controllers/AuthController';
 import { HttpMethod } from '../enums/httpMethod';
 import { AuthValidation } from '../validations/auth/AuthValidation';
 import { IRoute } from './IRoute.interface';

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { RegisterResource } from '../resources/auth/RegisterResource';
-import { AuthService } from '../services/authService';
+import { AuthService } from '../services/AuthService';
 import BaseController from './BaseController';
 import { LoginResource } from '../resources/auth/LoginResource';
 
@@ -16,7 +16,9 @@ export default class AuthController extends BaseController {
   }
 
   static async loginUser(req: Request, res: Response): Promise<Response> {
-    const user = await new AuthService().login(req.body);
+    const service = new AuthService();
+
+    const user = await service.login(req.body);
 
     const resource = new LoginResource({ resource: user });
 

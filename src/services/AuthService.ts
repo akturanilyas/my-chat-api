@@ -1,17 +1,11 @@
-import { BadRequest, Unauthorized } from '@curveball/http-errors';
 import { compare, genSalt, hash } from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { User } from '../models/user';
 import environment from '../builders/envBuilder';
-
-type RegisterInterface = {
-  password: string;
-  username: string;
-  first_name: string;
-  email: string;
-  last_name: string;
-  age: number;
-};
+import { UserNotFoundException } from '../exceptions/user/UserNotFoundException';
+import { RegisterInterface } from './AuthService.interface';
+import { PasswordMismatchException } from '../exceptions/user/PasswordMismatchException';
+import { UserAlreadyExistsException } from '../exceptions/user/UserAlreadyExistsException';
 
 export class AuthService {
   async register({ user }: { user: RegisterInterface }): Promise<User> {
@@ -19,7 +13,7 @@ export class AuthService {
       where: { email: user.email },
     });
 
-    if (userWithEmail) throw new BadRequest('Bu kullanici zaten var');
+    if (userWithEmail) throw new UserAlreadyExistsException();
 
     const salt = await genSalt(10);
     const hashedPassword = await hash(user.password, salt);
@@ -34,10 +28,10 @@ export class AuthService {
 
   login = async ({ email, password }: { email: string; password: string }) => {
     const user = await User.findOneBy({ email });
-    if (!user) throw new Unauthorized('Kullanici bulunamadi');
+    if (!user) throw new UserNotFoundException();
 
     const validPass = await compare(password, user.password);
-    if (!validPass) throw new Unauthorized('Şifre veya E-mail yanlış');
+    if (!validPass) throw new PasswordMismatchException();
 
     return { ...user, token: jwt.sign({ id: user.id }, environment.jwt_token) };
   };

@@ -3,11 +3,6 @@ import { Schema } from 'express-validator';
 import { HttpMethod } from '../enums/httpMethod';
 import { Middleware } from '../enums/middleware';
 
-interface ValidateType {
-  query?: Array<string>;
-  body?: Array<string>;
-}
-
 export interface IRoute {
   path: string;
   method: HttpMethod;

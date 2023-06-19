@@ -22,9 +22,6 @@ const buildController = async (app: Express) => {
 
         route.middlewares && params.push(getMiddlewares(route.middlewares));
 
-        // TODO Validation implementation
-        // route.validate && params.push(route.validate);
-
         const methodFunction = async (
           req: Request,
           res: Response,
