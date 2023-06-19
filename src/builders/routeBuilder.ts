@@ -6,10 +6,18 @@ import path from 'path';
 import { Middleware } from '../enums/middleware';
 import { IRoute } from '../routes/IRoute.interface';
 
-const routeDir = path.join(process.cwd(), 'src/routes');
+const controllerDir = path.join(process.cwd(), 'src/routes');
+const middlewaresDir = path.join(process.cwd(), 'src/middlewares');
 
-const getMiddlewares = (middlewares: Array<Middleware>): [] => [];
+const getMiddlewares = async (middlewares: Array<Middleware>) => {
+  const functions: Array<() => void> = [];
+  for (const fileName of middlewares) {
+    const { [fileName]: middleware } = await import(`${middlewaresDir}/${fileName}`);
+    functions.push(middleware as () => void);
+  }
 
+  return functions;
+};
 const generateMethodFunction =
   (route: IRoute) =>
   async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {
@@ -30,23 +38,26 @@ const generateMethodFunction =
   };
 
 const buildController = async (app: Express) => {
-  for (const fileName of fs.readdirSync(routeDir)) {
+  for (const fileName of fs.readdirSync(controllerDir)) {
     if (!fileName.endsWith('interface.ts')) {
-      const { routes } = await import(`${routeDir}/${fileName}`);
+      const { routes } = await import(`${controllerDir}/${fileName}`);
 
-      (routes as Array<IRoute>).forEach((route: IRoute) => {
+      for (const route of routes as Array<IRoute>) {
         const params: Array<unknown> = [];
 
         params.push(route.path);
 
-        route.middlewares && params.push(getMiddlewares(route.middlewares));
+        const middlewares =
+          route.middlewares && (await getMiddlewares(route.middlewares));
+
+        route.middlewares && params.push(middlewares);
 
         const methodFunction = generateMethodFunction(route);
 
         params.push(methodFunction);
 
         app[route.method as string](...params);
-      });
+      }
     }
   }
 };

@@ -1,1 +1,3 @@
-export enum Middleware {}
+export enum Middleware {
+  TOKEN_CHECKER = 'tokenChecker',
+}

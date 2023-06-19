@@ -4,8 +4,8 @@ import request from 'supertest';
 import { app } from '../../app';
 import { ENDPOINT } from '../../constants/endpoint.constant';
 import { connectionSource } from '../../server';
-import { DatabaseService } from '../../services/databaseService';
 import { postRequest } from '../../utils/testUtils';
+import { DatabaseService } from '../../services/DatabaseService';
 
 describe('AuthController', () => {
   it('Check /register endpoint', async () => {

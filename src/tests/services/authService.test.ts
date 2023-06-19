@@ -3,7 +3,7 @@ import { describe, expect } from '@jest/globals';
 import { User } from '../../models/user';
 import { connectionSource } from '../../server';
 import { AuthService } from '../../services/AuthService';
-import { DatabaseService } from '../../services/databaseService';
+import { DatabaseService } from '../../services/DatabaseService';
 
 describe('AuthService', () => {
   const service = new DatabaseService(connectionSource);

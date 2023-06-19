@@ -5,10 +5,10 @@ import environment from '../builders/envBuilder';
 import { UserNotFoundException } from '../exceptions/user/UserNotFoundException';
 import { PasswordMismatchException } from '../exceptions/user/PasswordMismatchException';
 import { UserAlreadyExistsException } from '../exceptions/user/UserAlreadyExistsException';
-import { RegisterUserRequest } from '../controllers/AuthController.interface';
+import { RegisterInterface } from './AuthService.interface';
 
 export class AuthService {
-  async register({ user }: { user: RegisterUserRequest }): Promise<User> {
+  async register({ user }: { user: RegisterInterface }): Promise<User> {
     const userWithEmail: User | null = await User.findOne({
       where: { email: user.email },
     });
