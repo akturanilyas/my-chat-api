@@ -3,12 +3,12 @@ import * as jwt from 'jsonwebtoken';
 import { User } from '../models/user';
 import environment from '../builders/envBuilder';
 import { UserNotFoundException } from '../exceptions/user/UserNotFoundException';
-import { RegisterInterface } from './AuthService.interface';
 import { PasswordMismatchException } from '../exceptions/user/PasswordMismatchException';
 import { UserAlreadyExistsException } from '../exceptions/user/UserAlreadyExistsException';
+import { RegisterUserRequest } from '../controllers/AuthController.interface';
 
 export class AuthService {
-  async register({ user }: { user: RegisterInterface }): Promise<User> {
+  async register({ user }: { user: RegisterUserRequest }): Promise<User> {
     const userWithEmail: User | null = await User.findOne({
       where: { email: user.email },
     });
