@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { AbstractModel } from './abstractModel';
-import { Chat } from './chat';
-import { User } from './user';
+import { AbstractModel } from './AbstractModel';
+import { Chat } from './Chat';
+import { User } from './User';
 
 @Entity('users_chats')
 export class UsersChats extends AbstractModel {

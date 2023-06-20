@@ -1,9 +1,8 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
-import { AbstractModel } from './abstractModel';
-import { Group } from './group';
-import { Message } from './message';
-import { User } from './user';
-import { UsersChats } from './usersChats';
+import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
+import { AbstractModel } from './AbstractModel';
+import { Message } from './Message';
+import { User } from './User';
+import { UsersChats } from './UsersChats';
 
 @Entity('chats')
 export class Chat extends AbstractModel {

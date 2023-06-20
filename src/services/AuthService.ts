@@ -1,6 +1,6 @@
 import { compare, genSalt, hash } from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { User } from '../models/user';
+import { User } from '../models/User';
 import environment from '../builders/envBuilder';
 import { UserNotFoundException } from '../exceptions/user/UserNotFoundException';
 import { PasswordMismatchException } from '../exceptions/user/PasswordMismatchException';

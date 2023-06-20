@@ -1,4 +1,4 @@
-import { User } from '../../models/user';
+import { User } from '../../models/User';
 import { AbstractResource } from '../AbstractResource';
 
 export class RegisterResource extends AbstractResource {

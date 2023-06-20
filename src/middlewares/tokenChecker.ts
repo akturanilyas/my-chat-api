@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { UnauthorizedException } from '../exceptions/UnauthorizedException';
 
 export const tokenChecker = (req: Request, res: Response, next: NextFunction) => {
   // Get the jwt token from the head
@@ -17,9 +18,7 @@ export const tokenChecker = (req: Request, res: Response, next: NextFunction) =>
     req.headers.user_id = id;
   } catch (error) {
     // If token is not valid, respond with 401 (unauthorized)
-    res.status(401).send(JSON.stringify('unauthorized'));
-
-    return;
+    throw new UnauthorizedException();
   }
 
   next();

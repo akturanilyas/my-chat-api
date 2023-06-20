@@ -1,5 +1,5 @@
 import { Column, Entity } from 'typeorm';
-import { AbstractModel } from './abstractModel';
+import { AbstractModel } from './AbstractModel';
 
 @Entity('users_groups')
 export class UsersGroups extends AbstractModel {

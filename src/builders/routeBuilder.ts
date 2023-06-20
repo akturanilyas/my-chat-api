@@ -18,6 +18,7 @@ const getMiddlewares = async (middlewares: Array<Middleware>) => {
 
   return functions;
 };
+
 const generateMethodFunction =
   (route: IRoute) =>
   async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {

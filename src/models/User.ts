@@ -1,7 +1,7 @@
 import { MinLength } from 'class-validator';
 import { Column, Entity, OneToMany } from 'typeorm';
-import { AbstractModel } from './abstractModel';
-import { UsersChats } from './usersChats';
+import { AbstractModel } from './AbstractModel';
+import { UsersChats } from './UsersChats';
 
 @Entity('users')
 export class User extends AbstractModel {

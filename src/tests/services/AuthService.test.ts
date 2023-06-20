@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect } from '@jest/globals';
-import { User } from '../../models/user';
+import { User } from '../../models/User';
 import { connectionSource } from '../../server';
 import { AuthService } from '../../services/AuthService';
 import { DatabaseService } from '../../services/DatabaseService';

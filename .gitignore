@@ -35,6 +35,7 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
+build
 build/*
 
 # Dependency directories
@@ -101,7 +102,6 @@ dist
 
 # vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # Docusaurus cache and generated files
 .docusaurus
