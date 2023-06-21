@@ -1,7 +1,7 @@
 import { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions';
 import environment from '../builders/envBuilder';
 
-const ormConfig: DataSourceOptions = {
+export const ormConfig: DataSourceOptions = {
   type: 'mysql',
   host: environment.host,
   port: 3306,
@@ -18,4 +18,11 @@ const ormConfig: DataSourceOptions = {
   dropSchema: false,
 };
 
-export default ormConfig;
+export const testOrmConfig: DataSourceOptions = {
+  type: 'better-sqlite3',
+  database: ':memory:',
+  dropSchema: true,
+  entities: ['src/models/**/*.ts', 'dist/models/**/*.js'],
+  synchronize: true,
+  logging: false,
+};

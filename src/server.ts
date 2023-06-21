@@ -2,7 +2,7 @@ import * as console from 'console';
 import { DataSource } from 'typeorm';
 import environment from './builders/envBuilder';
 import { app } from './app';
-import ormConfig from './config/ormConfig';
+import { ormConfig } from './config/ormConfig';
 import jobs from './jobs';
 import { DatabaseService } from './services/DatabaseService';
 import socket from './socket';
@@ -28,7 +28,7 @@ const httpServer = app
   });
 
 (async () => {
-  await new DatabaseService(connectionSource).initialize();
+  await new DatabaseService().initialize();
   await httpServer;
   await socket();
   await jobs();

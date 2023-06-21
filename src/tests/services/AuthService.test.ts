@@ -1,17 +1,9 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect } from '@jest/globals';
 import { User } from '../../models/User';
-import { connectionSource } from '../../server';
 import { AuthService } from '../../services/AuthService';
-import { DatabaseService } from '../../services/DatabaseService';
 
 describe('AuthService', () => {
-  const service = new DatabaseService(connectionSource);
-
-  beforeAll(async () => {
-    await service.initialize();
-  });
-
   it('Check /register service', async () => {
     const user = {
       email: faker.internet.email(),
@@ -37,8 +29,12 @@ describe('AuthService', () => {
       username: faker.internet.userName(),
     };
 
-    const res = await new AuthService().register({ user });
+    await new AuthService().register({ user });
 
-    await expect(res).toBeInstanceOf(User);
+    const res = await new AuthService().login({ ...user });
+
+    await expect(res.first_name).toBe(user.first_name);
+    await expect(res.last_name).toBe(user.last_name);
+    await expect(res.email).toBe(user.email);
   });
 });

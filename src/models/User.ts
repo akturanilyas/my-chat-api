@@ -23,7 +23,6 @@ export class User extends AbstractModel {
   @MinLength(5)
   @Column({
     type: 'text',
-    select: false,
   })
   password: string;
 
