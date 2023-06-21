@@ -60,6 +60,7 @@ module.exports = {
     'eol-last': ['error', 'always'],
     'lines-between-class-members': 'off',
     'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': 'warn'
+    '@typescript-eslint/no-shadow': 'warn',
+    'linebreak-style': ["error", "unix"]
   }
 };
