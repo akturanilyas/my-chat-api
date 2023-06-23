@@ -1,5 +1,5 @@
 import { MinLength } from 'class-validator';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { AbstractModel } from './AbstractModel';
 import { UsersChats } from './UsersChats';
 
@@ -34,4 +34,12 @@ export class User extends AbstractModel {
 
   @OneToMany(() => UsersChats, usersChats => usersChats.user)
   userChats?: UsersChats;
+
+  @ManyToMany(() => User)
+  @JoinTable({
+    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'friend_id', referencedColumnName: 'id' },
+  })
+  // eslint-disable-next-line no-use-before-define
+  friends: User[];
 }

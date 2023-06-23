@@ -6,22 +6,22 @@ import { User } from './User';
 @Entity('users_chats')
 export class UsersChats extends AbstractModel {
   @Column({
-    type: 'int',
+    type: 'string',
     nullable: false,
   })
-  user_id: number;
+  user_id: string;
 
   @Column({
-    type: 'int',
+    type: 'string',
     nullable: false,
   })
-  chat_id: number;
+  chat_id: string;
 
   @Column({
-    type: 'int',
+    type: 'string',
     nullable: false,
   })
-  target_id: number;
+  target_id: string;
 
   @Column('varchar', {
     length: 20,

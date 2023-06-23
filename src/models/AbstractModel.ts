@@ -7,15 +7,15 @@ import {
 } from 'typeorm';
 
 export class AbstractModel extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @CreateDateColumn({})
+  @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn({})
+  @UpdateDateColumn()
   updated_at: Date;
 
-  @DeleteDateColumn({})
+  @DeleteDateColumn()
   deleted_at: Date;
 }
