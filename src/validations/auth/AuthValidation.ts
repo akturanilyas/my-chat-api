@@ -28,5 +28,21 @@ export class AuthValidation extends AbstractValidation {
       notEmpty: true,
       errorMessage: 'Provide valid password.',
     },
+    first_name: {
+      isString: true,
+      notEmpty: true,
+      errorMessage: 'Provide valid first name.',
+    },
+    last_name: {
+      isString: true,
+      notEmpty: true,
+      errorMessage: 'Provide valid last name.',
+    },
+    username: {
+      isString: true,
+      notEmpty: true,
+      errorMessage: 'Provide valid username.',
+    },
+    age: { isEmpty: true, isNumeric: true },
   });
 }
