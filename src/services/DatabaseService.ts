@@ -1,4 +1,4 @@
-import { Connection, createConnection, DataSource } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { ormConfig, testOrmConfig } from '../config/ormConfig';
 
 export class DatabaseService {

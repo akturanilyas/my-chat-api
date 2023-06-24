@@ -1,8 +1,9 @@
 import { User } from '../models/User';
+import { GetUserInterface } from './UserService.interface';
 
 export class UserService {
-  private getFriends = async (): Promise<User> => {
-    const user = new User();
+  public getUser = async (filter: GetUserInterface): Promise<User | null> => {
+    const user = await User.findOne({ where: { ...filter } });
 
     return user;
   };

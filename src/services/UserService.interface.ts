@@ -1,8 +1,8 @@
-export type RegisterInterface = {
-  password: string;
-  username: string;
-  first_name: string;
-  email: string;
-  last_name: string;
-  age: number;
-};
+export interface GetUserInterface {
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  age?: number;
+}
