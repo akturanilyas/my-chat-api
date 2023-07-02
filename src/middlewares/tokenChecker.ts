@@ -13,7 +13,7 @@ export const tokenChecker = (req: Request, res: Response, next: NextFunction) =>
     res.locals.jwtPayload = jwtPayload;
 
     const { id } = jwtPayload;
-    const newToken = jwt.sign({ id }, process.env.SECRET_JWT as string, {});
+    const newToken = jwt.sign({ id }, process.env.JWT as string, {});
     res.setHeader('token', newToken);
     req.headers.user_id = id;
   } catch (error) {
