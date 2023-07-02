@@ -26,19 +26,14 @@ export class AuthService {
     return registeredUser;
   }
 
-  login = async ({ email, password }: { email: string; password: string }) => {
-    const user = await User.findOneBy({ email });
+  login = async ({ username, password }: { username: string; password: string }) => {
+    const user = await User.findOneBy({ username });
+
     if (!user) throw new UserNotFoundException();
 
     const validPass = await compare(password, user.password);
     if (!validPass) throw new PasswordMismatchException();
 
-    return { ...user, token: jwt.sign({ id: user.id }, environment.jwt_token) };
-  };
-
-  getUserIdByToken = (token: string): string => {
-    const jwtPayload = jwt.verify(token, process.env.SECRET_JWT as string);
-
-    return jwtPayload.id;
+    return { ...user, access_token: jwt.sign({ id: user.id }, environment.jwt_token) };
   };
 }

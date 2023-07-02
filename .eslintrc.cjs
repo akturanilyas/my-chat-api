@@ -61,6 +61,7 @@ module.exports = {
     'lines-between-class-members': 'off',
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'warn',
-    'linebreak-style': ["error", "unix"]
+    'linebreak-style': ["error", "unix"],
+    'no-underscore-dangle': 'off'
   }
 };

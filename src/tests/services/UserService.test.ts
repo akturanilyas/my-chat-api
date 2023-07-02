@@ -51,4 +51,36 @@ describe('UserService', () => {
     await expect(res?.first_name).toBe(user.first_name);
     await expect(res?.username).toBe(user.username);
   });
+
+  it('Check /getUserIdByToken method', async () => {
+    const authService = new AuthService();
+    const userService = new UserService();
+
+    const _user = await authService.login({ ...user });
+
+    const res = await userService.getUserIdByToken(_user.access_token);
+
+    await expect(res).toBe(_user.id);
+  });
+
+  it('Check /getUserIdByToken method', async () => {
+    const authService = new AuthService();
+    const userService = new UserService();
+
+    const _user = await authService.login({ ...user });
+    const res = await userService.getUserIdByToken(`Bearer ${_user.access_token}`);
+
+    await expect(res).toBe(_user.id);
+  });
+
+  it('Check /getSelf method', async () => {
+    const authService = new AuthService();
+    const userService = new UserService();
+
+    const _user = await authService.login({ ...user });
+
+    const res = await userService.getSelf(`Bearer ${_user.access_token}`);
+
+    await expect(res).toBeInstanceOf(User);
+  });
 });
