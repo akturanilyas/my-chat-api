@@ -28,7 +28,7 @@ const generateMethodFunction =
       // TODO: [AKTURAN] handle errors
       if (
         map(errors, 'errors')
-          .map((item) => Boolean(item.length))
+          .map(item => Boolean(item.length))
           .includes(true)
       ) {
         return res.status(400).json({ errors: map(errors, 'errors') });

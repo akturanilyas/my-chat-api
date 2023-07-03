@@ -32,10 +32,14 @@ export class User extends AbstractModel {
   })
   age?: number;
 
-  @OneToMany(() => UsersChats, usersChats => usersChats.user)
+  @OneToMany(() => UsersChats, usersChats => usersChats.user, {
+    createForeignKeyConstraints: false,
+  })
   userChats?: UsersChats;
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, {
+    createForeignKeyConstraints: false,
+  })
   @JoinTable({
     joinColumn: { name: 'user_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'friend_id', referencedColumnName: 'id' },
