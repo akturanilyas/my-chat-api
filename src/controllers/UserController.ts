@@ -11,4 +11,10 @@ export default class UserController extends BaseController {
 
     return res.status(201).json(user);
   }
+
+  static async searchUsers(req: Request, res: Response): Promise<Response> {
+    const user: User[] = await new UserService().searchUsers();
+
+    return res.status(201).json(user);
+  }
 }

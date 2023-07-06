@@ -1,8 +1,10 @@
 import * as jwt from 'jsonwebtoken';
 import { trimStart } from 'lodash';
+import { Not } from 'typeorm';
 import { User } from '../models/User';
 import { GetUserInterface } from './UserService.interface';
 import { UserNotFoundException } from '../exceptions/user/UserNotFoundException';
+import environment from '../builders/envBuilder';
 
 export class UserService {
   public getUser = async (filter: GetUserInterface): Promise<User | null> => {
@@ -23,13 +25,22 @@ export class UserService {
     return user;
   };
 
-  getUserIdByToken = (token: string): string | null => {
+  getUserIdByToken = (token: string): string => {
     if (token.startsWith('Bearer ')) {
-      const token2 = trimStart(trimStart(token, 'Bearer'));
-
-      return jwt.verify(token2, process.env.JWT as string)?.id;
+      return jwt.verify(
+        trimStart(trimStart(token, 'Bearer')),
+        process.env.jwt_token as string,
+      )?.id;
     }
 
-    return jwt.verify(token, process.env.JWT as string)?.id;
+    return jwt.verify(token, environment.jwt_token as string)?.id;
+  };
+
+  searchUsers = async (): Promise<Array<User>> => {
+    const users = await User.find({
+      where: { id: Not(this.getUserIdByToken(global.token)) },
+    });
+
+    return users;
   };
 }

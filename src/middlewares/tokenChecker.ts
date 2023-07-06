@@ -15,6 +15,8 @@ export const tokenChecker = (req: Request, res: Response, next: NextFunction) =>
     const { id } = jwtPayload;
     const newToken = jwt.sign({ id }, process.env.JWT as string, {});
     res.setHeader('token', newToken);
+    global.token = newToken;
+    global.user_id = id;
     req.headers.user_id = id;
   } catch (error) {
     // If token is not valid, respond with 401 (unauthorized)

@@ -9,4 +9,9 @@ export const routes: Array<IRoute> = [
     method: HttpMethod.GET,
     handler: UserController.getSelf,
   },
+  {
+    path: `/api${ENDPOINT.SEARCH_USER}`,
+    method: HttpMethod.GET,
+    handler: UserController.searchUsers,
+  },
 ];

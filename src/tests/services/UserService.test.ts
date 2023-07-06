@@ -13,30 +13,41 @@ describe('UserService', () => {
     username: 'username',
   };
 
+  const user2 = {
+    email: 'test2@gmail.com',
+    password: 'password',
+    age: 12,
+    last_name: 'last_name2',
+    first_name: 'first_name2',
+    username: 'username2',
+  };
+
   beforeAll(async () => {
-    await new AuthService().register({ user });
+    const service = new AuthService();
+    await service.register({ user });
+    await service.register({ user: user2 });
   });
 
   it('Check /getUser method by email', async () => {
     const res: User | null = await new UserService().getUser({ email: user.email });
 
-    await expect(res).toBeInstanceOf(User);
-    await expect(res?.email).toBe(user.email);
-    await expect(res?.age).toBe(user.age);
-    await expect(res?.last_name).toBe(user.last_name);
-    await expect(res?.first_name).toBe(user.first_name);
-    await expect(res?.username).toBe(user.username);
+    expect(res).toBeInstanceOf(User);
+    expect(res?.email).toBe(user.email);
+    expect(res?.age).toBe(user.age);
+    expect(res?.last_name).toBe(user.last_name);
+    expect(res?.first_name).toBe(user.first_name);
+    expect(res?.username).toBe(user.username);
   });
 
   it('Check /getUser method by age', async () => {
     const res: User | null = await new UserService().getUser({ age: user.age });
 
-    await expect(res).toBeInstanceOf(User);
-    await expect(res?.email).toBe(user.email);
-    await expect(res?.age).toBe(user.age);
-    await expect(res?.last_name).toBe(user.last_name);
-    await expect(res?.first_name).toBe(user.first_name);
-    await expect(res?.username).toBe(user.username);
+    expect(res).toBeInstanceOf(User);
+    expect(res?.email).toBe(user.email);
+    expect(res?.age).toBe(user.age);
+    expect(res?.last_name).toBe(user.last_name);
+    expect(res?.first_name).toBe(user.first_name);
+    expect(res?.username).toBe(user.username);
   });
 
   it('Check /getUser method by last_name', async () => {
@@ -44,12 +55,12 @@ describe('UserService', () => {
       last_name: user.last_name,
     });
 
-    await expect(res).toBeInstanceOf(User);
-    await expect(res?.email).toBe(user.email);
-    await expect(res?.age).toBe(user.age);
-    await expect(res?.last_name).toBe(user.last_name);
-    await expect(res?.first_name).toBe(user.first_name);
-    await expect(res?.username).toBe(user.username);
+    expect(res).toBeInstanceOf(User);
+    expect(res?.email).toBe(user.email);
+    expect(res?.age).toBe(user.age);
+    expect(res?.last_name).toBe(user.last_name);
+    expect(res?.first_name).toBe(user.first_name);
+    expect(res?.username).toBe(user.username);
   });
 
   it('Check /getUserIdByToken method', async () => {
@@ -82,5 +93,19 @@ describe('UserService', () => {
     const res = await userService.getSelf(`Bearer ${_user.access_token}`);
 
     await expect(res).toBeInstanceOf(User);
+  });
+
+  it('Check /getUsersWithFriend method', async () => {
+    const authService = new AuthService();
+    const userService = new UserService();
+
+    const _user = await authService.login({ ...user });
+
+    global.token = _user.access_token;
+
+    const res = await userService.searchUsers();
+
+    expect(res).toBeInstanceOf(Array<User>);
+    expect(res.length).toBe(2);
   });
 });
