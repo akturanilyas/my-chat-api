@@ -16,14 +16,11 @@ export const errorHandler = (
   req: Request,
   res: Response,
   next: NextFunction,
-): Response => {
-  console.log('Jndjkas');
-
-  return res
+): Response =>
+  res
     .status((err.status as number) || (err.httpStatus as number) || 500)
     .json({
       message: err.message,
       status: err.status,
     })
     .send();
-};

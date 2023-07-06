@@ -1,4 +1,4 @@
-export interface GetUserInterface {
+export interface GetUserFilter {
   first_name?: string;
   last_name?: string;
   username?: string;

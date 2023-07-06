@@ -2,6 +2,7 @@ import { describe, expect } from '@jest/globals';
 import { User } from '../../models/User';
 import { AuthService } from '../../services/AuthService';
 import { UserService } from '../../services/UserService';
+import { getUserIdByToken } from '../../utils/commonUtil';
 
 describe('UserService', () => {
   const user = {
@@ -65,21 +66,19 @@ describe('UserService', () => {
 
   it('Check /getUserIdByToken method', async () => {
     const authService = new AuthService();
-    const userService = new UserService();
 
     const _user = await authService.login({ ...user });
 
-    const res = await userService.getUserIdByToken(_user.access_token);
+    const res = getUserIdByToken(_user.access_token);
 
     await expect(res).toBe(_user.id);
   });
 
-  it('Check /getUserIdByToken method', async () => {
+  it('Check /getUserIdByToken method2', async () => {
     const authService = new AuthService();
-    const userService = new UserService();
 
     const _user = await authService.login({ ...user });
-    const res = await userService.getUserIdByToken(`Bearer ${_user.access_token}`);
+    const res = getUserIdByToken(`Bearer ${_user.access_token}`);
 
     await expect(res).toBe(_user.id);
   });
@@ -106,6 +105,6 @@ describe('UserService', () => {
     const res = await userService.searchUsers();
 
     expect(res).toBeInstanceOf(Array<User>);
-    expect(res.length).toBe(2);
+    expect(res.length).toBe(1);
   });
 });

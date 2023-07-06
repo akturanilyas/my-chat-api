@@ -3,6 +3,11 @@ import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { AbstractModel } from './AbstractModel';
 import { UsersChats } from './UsersChats';
 
+interface PivotUser {
+  user_id: string;
+  friend_id: string;
+}
+
 @Entity('users')
 export class User extends AbstractModel {
   @Column('varchar', { length: 20 })
@@ -45,5 +50,5 @@ export class User extends AbstractModel {
     inverseJoinColumn: { name: 'friend_id', referencedColumnName: 'id' },
   })
   // eslint-disable-next-line no-use-before-define
-  friends: User[];
+  friends: User[] | PivotUser;
 }
