@@ -2,7 +2,7 @@ import { describe, expect } from '@jest/globals';
 import { User } from '../../models/User';
 import { AuthService } from '../../services/AuthService';
 import { UserService } from '../../services/UserService';
-import { getUserIdByToken } from '../../utils/commonUtil';
+import { getUserIdByToken, serializeToken } from '../../utils/commonUtil';
 
 describe('UserService', () => {
   const user = {
@@ -78,7 +78,9 @@ describe('UserService', () => {
     const authService = new AuthService();
 
     const _user = await authService.login({ ...user });
-    const res = getUserIdByToken(`Bearer ${_user.access_token}`);
+    const res = getUserIdByToken(
+      serializeToken(`Bearer ${serializeToken(_user.access_token)}`),
+    );
 
     await expect(res).toBe(_user.id);
   });
@@ -89,7 +91,9 @@ describe('UserService', () => {
 
     const _user = await authService.login({ ...user });
 
-    const res = await userService.getSelf(`Bearer ${_user.access_token}`);
+    const res = await userService.getSelf(
+      serializeToken(`Bearer ${serializeToken(_user.access_token)}`),
+    );
 
     await expect(res).toBeInstanceOf(User);
   });

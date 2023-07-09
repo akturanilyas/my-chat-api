@@ -11,8 +11,8 @@ export class UserService {
     return user;
   };
 
-  getSelf = async (token: string) => {
-    const id = getUserIdByToken(token);
+  getSelf = async (token?: string) => {
+    const id = getUserIdByToken(token || global.token);
 
     if (!id) throw new UserNotFoundException();
 

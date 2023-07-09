@@ -28,7 +28,6 @@ const httpServer = app
   });
 
 (async () => {
-  await new DatabaseService().initialize();
   await httpServer;
   await socket();
   await jobs();

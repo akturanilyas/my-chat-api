@@ -25,4 +25,6 @@ export const testOrmConfig: DataSourceOptions = {
   entities: ['src/models/**/*.ts', 'dist/models/**/*.js'],
   synchronize: true,
   logging: false,
+  migrations: ['src/migration/**/*.ts'],
+  subscribers: ['src/subscriber/**/*.ts'],
 };

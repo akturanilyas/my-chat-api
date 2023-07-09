@@ -1,8 +1,14 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  bail: 1,
-  verbose: true,
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.json',
+    },
+  },
+  moduleFileExtensions: ['ts', 'js'],
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
+  },
+  testMatch: ['**/tests/**/*.test.(ts)'],
+  testEnvironment: 'node',
   setupFilesAfterEnv: ['./jest.setup.ts'],
-  collectCoverage: true,
-  clearMocks: true,
 };

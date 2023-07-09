@@ -16,7 +16,7 @@ describe('AuthService', () => {
 
     const res = await new AuthService().register({ user });
 
-    await expect(res).toBeInstanceOf(User);
+    expect(res).toBeInstanceOf(User);
   });
 
   it('Check /login service', async () => {
@@ -33,8 +33,8 @@ describe('AuthService', () => {
 
     const res = await new AuthService().login({ ...user });
 
-    await expect(res.first_name).toBe(user.first_name);
-    await expect(res.last_name).toBe(user.last_name);
-    await expect(res.email).toBe(user.email);
+    expect(res.first_name).toBe(user.first_name);
+    expect(res.last_name).toBe(user.last_name);
+    expect(res.email).toBe(user.email);
   });
 });

@@ -23,26 +23,23 @@ describe('AuthController', () => {
   });
 
   it('check login endpoint', async () => {
-    const email = faker.internet.email();
-    const password = faker.internet.password();
-
     const registerParams = {
-      password,
+      password: faker.internet.password(),
       username: faker.internet.userName(),
       first_name: faker.person.firstName(),
-      email,
+      email: faker.internet.email(),
       last_name: faker.person.lastName(),
       age: 12,
     };
 
-    await postRequest({
+    const a = await postRequest({
       body: registerParams,
       path: `/api${ENDPOINT.AUTH}${ENDPOINT.REGISTER}`,
     });
 
     const params = {
-      password,
-      email,
+      password: registerParams.password,
+      username: registerParams.username,
     };
 
     const res = await postRequest({

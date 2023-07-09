@@ -14,8 +14,7 @@ export class Friend extends AbstractModel {
   receiver: User;
 
   @Column({
-    type: 'enum',
-    enum: FriendStatus,
+    type: 'varchar',
     default: FriendStatus.PENDING,
   })
   status: FriendStatus;
