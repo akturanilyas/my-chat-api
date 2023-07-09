@@ -106,7 +106,7 @@ describe('UserService', () => {
 
     global.token = _user.access_token;
 
-    const res = await userService.searchUsers();
+    const res = await userService.searchUsers({});
 
     expect(res).toBeInstanceOf(Array<User>);
     expect(res.length).toBe(1);
