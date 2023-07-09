@@ -12,7 +12,7 @@ export const routes: Array<IRoute> = [
     middlewares: [Middleware.TOKEN_CHECKER],
   },
   {
-    path: `/api${ENDPOINT.SEARCH_USER}`,
+    path: `/api${ENDPOINT.SEARCH_USERS}`,
     method: HttpMethod.GET,
     handler: UserController.searchUsers,
     middlewares: [Middleware.TOKEN_CHECKER],

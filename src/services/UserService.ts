@@ -23,13 +23,11 @@ export class UserService {
     return user;
   };
 
-  searchUsers = async (user_id?: string): Promise<Array<User>> => {
+  searchUsers = async (): Promise<Array<User>> => {
     const users = await User.find({
       where: {
         id: Not(getUserIdByToken(global.token)),
-        friends: { friend_id: user_id || global.user_id },
       },
-      relations: { friends: true },
     });
 
     return users;

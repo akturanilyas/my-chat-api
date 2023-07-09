@@ -3,5 +3,5 @@ export const ENDPOINT = {
   LOGIN: '/login',
   REGISTER: '/register',
   SELF: '/self',
-  SEARCH_USER: '/search-user',
+  SEARCH_USERS: '/search-users',
 };

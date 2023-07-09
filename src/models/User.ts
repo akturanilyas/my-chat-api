@@ -1,12 +1,8 @@
 import { MinLength } from 'class-validator';
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { AbstractModel } from './AbstractModel';
 import { UsersChats } from './UsersChats';
-
-interface PivotUser {
-  user_id: string;
-  friend_id: string;
-}
+import { Friend } from './Friend';
 
 @Entity('users')
 export class User extends AbstractModel {
@@ -42,13 +38,9 @@ export class User extends AbstractModel {
   })
   userChats?: UsersChats;
 
-  @ManyToMany(() => User, {
-    createForeignKeyConstraints: false,
-  })
-  @JoinTable({
-    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'friend_id', referencedColumnName: 'id' },
-  })
-  // eslint-disable-next-line no-use-before-define
-  friends: User[] | PivotUser;
+  @OneToMany(() => Friend, user => user.requester)
+  sentRequests: Friend[];
+
+  @OneToMany(() => Friend, user => user.receiver)
+  receivedRequests: Friend[];
 }
