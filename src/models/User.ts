@@ -38,9 +38,15 @@ export class User extends AbstractModel {
   })
   userChats?: UsersChats;
 
-  @OneToMany(() => Friend, user => user.requester)
+  @OneToMany(() => Friend, user => user.requester, {
+    createForeignKeyConstraints: false,
+  })
   sentRequests: Friend[];
 
-  @OneToMany(() => Friend, user => user.receiver)
+  @OneToMany(() => Friend, user => user.receiver, {
+    createForeignKeyConstraints: false,
+  })
   receivedRequests: Friend[];
+
+  getFullName = () => `${this.first_name} ${this.last_name}`;
 }

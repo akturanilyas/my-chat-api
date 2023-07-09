@@ -4,7 +4,6 @@ import environment from './builders/envBuilder';
 import { app } from './app';
 import { ormConfig } from './config/ormConfig';
 import jobs from './jobs';
-import { DatabaseService } from './services/DatabaseService';
 import socket from './socket';
 
 export const connectionSource: DataSource = new DataSource(ormConfig);
@@ -28,6 +27,7 @@ const httpServer = app
   });
 
 (async () => {
+  await connectionSource.initialize();
   await httpServer;
   await socket();
   await jobs();
