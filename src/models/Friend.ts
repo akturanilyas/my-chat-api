@@ -5,12 +5,24 @@ import { AbstractModel } from './AbstractModel';
 
 @Entity('friends')
 export class Friend extends AbstractModel {
-  @ManyToOne(() => User)
-  @JoinColumn()
+  @Column({
+    type: 'string',
+    nullable: false,
+  })
+  user_id: string;
+
+  @Column({
+    type: 'string',
+    nullable: false,
+  })
+  receiver_id: string;
+
+  @ManyToOne(() => User, { createForeignKeyConstraints: false })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   requester: User;
 
-  @ManyToOne(() => User)
-  @JoinColumn()
+  @ManyToOne(() => User, { createForeignKeyConstraints: false })
+  @JoinColumn({ name: 'receiver_id', referencedColumnName: 'id' })
   receiver: User;
 
   @Column({
