@@ -2,8 +2,8 @@ import { User } from '../../models/User';
 import { AbstractResource } from '../AbstractResource';
 
 export class SelfResource extends AbstractResource {
-  public toJson = (): object => {
-    const user = this.resource as User;
+  public toJson(resource: object): object {
+    const user = resource as User;
 
     return {
       first_name: user.first_name,
@@ -12,5 +12,5 @@ export class SelfResource extends AbstractResource {
       email: user.email,
       age: user.age,
     };
-  };
+  }
 }

@@ -2,7 +2,7 @@ import { User } from '../models/User';
 import { GetUserFilter } from './UserService.interface';
 import { UserNotFoundException } from '../exceptions/user/UserNotFoundException';
 import { getUserIdByToken } from '../utils/commonUtil';
-import { connectionSource } from '../server';
+import { databaseService } from '../server';
 
 export class UserService {
   public getUser = async (filter: GetUserFilter): Promise<User | null> => {
@@ -24,18 +24,18 @@ export class UserService {
   };
 
   searchUsers = async ({ name }: { name?: string }): Promise<Array<User>> => {
-    const users = await connectionSource.manager
+    const users = await databaseService.source
       .getRepository(User)
       .createQueryBuilder('user')
       .where('user.id != :id', { id: global.user_id })
-      .where(qb => {
+      .where((qb) => {
         qb.orWhere('user.first_name LIKE :search', { search: `%${name}%` }).orWhere(
           'user.last_name LIKE :search',
           { search: `%${name}%` },
         );
       })
       .getMany();
-    console.log(users);
+
     return users;
   };
 }

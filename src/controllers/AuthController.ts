@@ -13,7 +13,7 @@ export default class AuthController extends BaseController {
 
     const resource = new RegisterResource({ resource: user });
 
-    return res.status(201).json(resource.toJson());
+    return res.status(201).json(resource);
   }
 
   static async loginUser(req: Request, res: Response): Promise<Response> {
@@ -29,6 +29,6 @@ export default class AuthController extends BaseController {
 
     const resource = new LoginResource({ resource: user });
 
-    return res.status(201).json(resource.toJson());
+    return res.status(201).json(resource);
   }
 }

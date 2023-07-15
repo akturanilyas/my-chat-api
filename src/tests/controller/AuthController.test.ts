@@ -32,7 +32,7 @@ describe('AuthController', () => {
       age: 12,
     };
 
-    const a = await postRequest({
+    await postRequest({
       body: registerParams,
       path: `/api${ENDPOINT.AUTH}${ENDPOINT.REGISTER}`,
     });

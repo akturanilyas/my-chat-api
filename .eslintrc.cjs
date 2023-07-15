@@ -63,6 +63,7 @@ module.exports = {
     '@typescript-eslint/no-shadow': 'warn',
     'linebreak-style': ["error", "unix"],
     'no-unreachable': 'error',
-    'no-underscore-dangle': 'off'
+    'no-underscore-dangle': 'off',
+    'newline-before-return': 'error'
   }
 };

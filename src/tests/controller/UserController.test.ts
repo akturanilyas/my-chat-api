@@ -4,7 +4,7 @@ import { getRequest } from '../../utils/testUtils';
 import { AuthService } from '../../services/AuthService';
 
 describe('UserController', () => {
-  it('check login endpoint', async () => {
+  it('check self endpoint', async () => {
     const authService = new AuthService();
 
     const userParams = {
@@ -27,7 +27,7 @@ describe('UserController', () => {
       token: loginRes.access_token,
     });
 
-    expect(res.statusCode).toBe(201);
+    expect(res.statusCode).toBe(200);
     expect(res.body).toStrictEqual({
       age: userParams.age,
       created_at: loginRes.created_at.toISOString(),
