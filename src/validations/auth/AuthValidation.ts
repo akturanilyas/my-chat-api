@@ -3,11 +3,10 @@ import { AbstractValidation } from '../AbstractValidation';
 
 export class AuthValidation extends AbstractValidation {
   public loginValidation = (): Schema => ({
-    email: {
+    username: {
       isString: true,
       notEmpty: true,
-      matches: { options: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/ },
-      errorMessage: 'Provide valid email.',
+      errorMessage: 'Provide valid username.',
     },
     password: {
       isString: true,
@@ -28,5 +27,21 @@ export class AuthValidation extends AbstractValidation {
       notEmpty: true,
       errorMessage: 'Provide valid password.',
     },
+    first_name: {
+      isString: true,
+      notEmpty: true,
+      errorMessage: 'Provide valid first name.',
+    },
+    last_name: {
+      isString: true,
+      notEmpty: true,
+      errorMessage: 'Provide valid last name.',
+    },
+    username: {
+      isString: true,
+      notEmpty: true,
+      errorMessage: 'Provide valid username.',
+    },
+    age: { optional: true, isNumeric: true },
   });
 }

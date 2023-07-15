@@ -6,22 +6,22 @@ import { User } from './User';
 @Entity('users_chats')
 export class UsersChats extends AbstractModel {
   @Column({
-    type: 'int',
+    type: 'string',
     nullable: false,
   })
-  user_id: number;
+  user_id: string;
 
   @Column({
-    type: 'int',
+    type: 'string',
     nullable: false,
   })
-  chat_id: number;
+  chat_id: string;
 
   @Column({
-    type: 'int',
+    type: 'string',
     nullable: false,
   })
-  target_id: number;
+  target_id: string;
 
   @Column('varchar', {
     length: 20,
@@ -29,18 +29,24 @@ export class UsersChats extends AbstractModel {
   })
   target_type: string;
 
-  @ManyToOne(() => Chat, chat => chat.usersChats)
+  @ManyToOne(() => Chat, chat => chat.usersChats, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({
     name: 'chat_id',
     referencedColumnName: 'id',
   })
   chat: Chat;
 
-  @ManyToOne(() => User, user => user.userChats)
+  @ManyToOne(() => User, user => user.userChats, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user: User;
 
-  @ManyToOne(() => User, user => user.userChats)
+  @ManyToOne(() => User, user => user.userChats, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({ name: 'target_id', referencedColumnName: 'id' })
   target: User;
 }

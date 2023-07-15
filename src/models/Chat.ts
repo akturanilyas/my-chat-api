@@ -12,14 +12,20 @@ export class Chat extends AbstractModel {
   @OneToMany(() => UsersChats, usersChat => usersChat.chat)
   usersChats: UsersChats[];
 
-  @OneToMany(() => UsersChats, usersChat => usersChat.user, { eager: true })
+  @OneToMany(() => UsersChats, usersChat => usersChat.user, {
+    eager: true,
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({
     name: 'user_id',
     referencedColumnName: 'id',
   })
   users: User[];
 
-  @OneToMany(() => Message, message => message.chat, { eager: true })
+  @OneToMany(() => Message, message => message.chat, {
+    eager: true,
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({
     name: 'id',
     referencedColumnName: 'chat_id',

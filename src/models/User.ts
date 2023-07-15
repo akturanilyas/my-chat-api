@@ -2,6 +2,7 @@ import { MinLength } from 'class-validator';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { AbstractModel } from './AbstractModel';
 import { UsersChats } from './UsersChats';
+import { Friend } from './Friend';
 
 @Entity('users')
 export class User extends AbstractModel {
@@ -23,7 +24,6 @@ export class User extends AbstractModel {
   @MinLength(5)
   @Column({
     type: 'text',
-    select: false,
   })
   password: string;
 
@@ -33,6 +33,20 @@ export class User extends AbstractModel {
   })
   age?: number;
 
-  @OneToMany(() => UsersChats, usersChats => usersChats.user)
+  @OneToMany(() => UsersChats, usersChats => usersChats.user, {
+    createForeignKeyConstraints: false,
+  })
   userChats?: UsersChats;
+
+  @OneToMany(() => Friend, user => user.requester, {
+    createForeignKeyConstraints: false,
+  })
+  sentRequests: Friend[];
+
+  @OneToMany(() => Friend, user => user.receiver, {
+    createForeignKeyConstraints: false,
+  })
+  receivedRequests: Friend[];
+
+  getFullName = () => `${this.first_name} ${this.last_name}`;
 }

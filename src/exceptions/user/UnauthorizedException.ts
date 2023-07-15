@@ -1,6 +1,6 @@
-import { AbstractException } from './AbstractException.abstract';
+import { AbstractException } from '../AbstractException.abstract';
 
 export class UnauthorizedException extends AbstractException {
-  httpStatus = 401;
+  status = 401;
   title = 'Unauthorized';
 }

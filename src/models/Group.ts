@@ -13,7 +13,9 @@ export class Group extends AbstractModel {
   @Column({ type: 'int' })
   chat_id: number;
 
-  @OneToOne(() => Chat)
+  @OneToOne(() => Chat, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({
     name: 'chatable_id',
     referencedColumnName: 'id',

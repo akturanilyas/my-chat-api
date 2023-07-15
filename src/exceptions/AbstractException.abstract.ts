@@ -5,12 +5,13 @@ export abstract class AbstractException
   implements AbstractExceptionInterface
 {
   type: string | null = null;
-  httpStatus = 500;
+  status;
   title = 'Internal Server Error';
   detail: string | null = null;
 
-  constructor(detail: string | null = null) {
+  constructor(detail: string | null = null, status = 500) {
     super(detail || 'HTTP error');
     this.detail = detail;
+    this.status = status;
   }
 }

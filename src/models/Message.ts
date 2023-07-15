@@ -13,7 +13,9 @@ export class Message extends AbstractModel {
   @Column({ type: 'text' })
   text: string;
 
-  @ManyToOne(() => Chat, chat => chat.messages)
+  @ManyToOne(() => Chat, chat => chat.messages, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({
     name: 'chat_id',
     referencedColumnName: 'id',

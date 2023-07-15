@@ -16,3 +16,20 @@ export const postRequest = async ({
 
   return response;
 };
+
+export const getRequest = async ({
+  path,
+  query,
+  token = '',
+}: {
+  path: string;
+  query?: Record<string, unknown>;
+  token?: string;
+}) => {
+  const response = await request(app)
+    .get(path)
+    .query(query || {})
+    .auth(token, { type: 'bearer' });
+
+  return response;
+};
