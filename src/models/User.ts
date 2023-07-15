@@ -34,17 +34,17 @@ export class User extends AbstractModel {
   })
   age?: number;
 
-  @OneToMany(() => UsersChats, (usersChats) => usersChats.user, {
+  @OneToMany(() => UsersChats, usersChats => usersChats.user, {
     createForeignKeyConstraints: false,
   })
   userChats?: UsersChats;
 
-  @OneToMany(() => Friend, (user) => user.requester, {
+  @OneToMany(() => Friend, user => user.requester, {
     createForeignKeyConstraints: false,
   })
   sentRequests: Friend[];
 
-  @OneToMany(() => Friend, (user) => user.receiver, {
+  @OneToMany(() => Friend, user => user.receiver, {
     createForeignKeyConstraints: false,
   })
   receivedRequests: Friend[];

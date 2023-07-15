@@ -30,15 +30,21 @@ export class UserService {
   searchUsers = async ({ name }: { name?: string }): Promise<Array<User>> => {
     const users = await databaseService.source
       .getRepository(User)
-      .createQueryBuilder('user')
-      .where('user.id != :id', { id: global.user_id })
+      .createQueryBuilder('users')
+      .where('users.id != :id', { id: global.user_id })
       .andWhere(
-        new Brackets((qb) => {
-          qb.where('user.first_name LIKE :search', { search: `%${name || ''}%` });
-          qb.orWhere('user.last_name LIKE :search', { search: `%${name || ''}%` });
+        new Brackets(qb => {
+          qb.where('users.first_name LIKE :search', { search: `%${name || ''}%` });
+          qb.orWhere('users.last_name LIKE :search', { search: `%${name || ''}%` });
         }),
       )
-      // TODO Join
+      .leftJoinAndMapOne(
+        'users.friend',
+        Friend,
+        'friends',
+        'friends.receiver_id = users.id and friends.user_id = :id',
+        { id: global.user_id },
+      )
       .getMany();
 
     return users;
