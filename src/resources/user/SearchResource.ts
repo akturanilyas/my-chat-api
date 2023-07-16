@@ -18,7 +18,7 @@ export class SearchResource extends AbstractResource {
       full_name: user.getFullName(),
       username: user.username,
       is_friend: FriendStatus.ACCEPTED === user.friend?.status,
-      friend_status: user.friend?.status,
+      status: user.friend?.status,
     }));
   }
 }

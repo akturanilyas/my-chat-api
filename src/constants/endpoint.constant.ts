@@ -8,5 +8,6 @@ export const ENDPOINT = {
   ACCEPT: '/accept',
   REJECT: '/reject',
   REMOVE: '/remove',
+  REQUESTS: '/requests',
   ADD: '/add',
 };

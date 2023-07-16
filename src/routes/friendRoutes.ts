@@ -18,9 +18,27 @@ export const routes: Array<IRoute> = [
   },
   {
     path: `/api${ENDPOINT.FRIENDS}${ENDPOINT.REMOVE}`,
-    method: HttpMethod.POST,
+    method: HttpMethod.DELETE,
     handler: controller.removeFriend,
     middlewares: [Middleware.TOKEN_CHECKER],
     validate: validation.removeFriendValidation(),
+  },
+  {
+    path: `/api${ENDPOINT.FRIENDS}${ENDPOINT.REQUESTS}`,
+    method: HttpMethod.GET,
+    handler: controller.getFriendRequests,
+    middlewares: [Middleware.TOKEN_CHECKER],
+  },
+  {
+    path: `/api${ENDPOINT.FRIENDS}/:id${ENDPOINT.ACCEPT}`,
+    method: HttpMethod.POST,
+    handler: controller.acceptFriend,
+    middlewares: [Middleware.TOKEN_CHECKER],
+  },
+  {
+    path: `/api${ENDPOINT.FRIENDS}/:id${ENDPOINT.REJECT}`,
+    method: HttpMethod.POST,
+    handler: controller.rejectFriend,
+    middlewares: [Middleware.TOKEN_CHECKER],
   },
 ];

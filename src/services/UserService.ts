@@ -5,8 +5,6 @@ import { UserNotFoundException } from '../exceptions/user/UserNotFoundException'
 import { getUserIdByToken } from '../utils/commonUtil';
 import { databaseService } from '../server';
 import { Friend } from '../models/Friend';
-import { FriendStatus } from '../enums/friendStatus';
-import { FriendRequestNotFound } from '../exceptions/friend/FriendRequestNotFound';
 
 export class UserService {
   public getUser = async (filter: GetUserFilter): Promise<User | null> => {
@@ -48,72 +46,5 @@ export class UserService {
       .getMany();
 
     return users;
-  };
-
-  addFriend = async (user_id: string) => {
-    const friend = Friend.create({
-      status: FriendStatus.PENDING,
-      receiver_id: user_id,
-      user_id: global.user_id,
-    });
-
-    await friend.save();
-
-    const targetFriend = Friend.create({
-      status: FriendStatus.PENDING,
-      user_id,
-      receiver_id: global.user_id,
-    });
-
-    await targetFriend.save();
-
-    return { friend, targetFriend };
-  };
-
-  removeFriend = async (id: string) => {
-    const { friendRequest, targetRequest } = await this.findFriendsRequests(id);
-
-    await targetRequest?.softRemove();
-    await friendRequest?.softRemove();
-  };
-
-  acceptFriend = async (id: string) => {
-    const { friendRequest, targetRequest } = await this.findFriendsRequests(id);
-
-    friendRequest.status = FriendStatus.ACCEPTED;
-    await friendRequest.save();
-
-    targetRequest.status = FriendStatus.ACCEPTED;
-    await targetRequest.save();
-  };
-
-  declineFriend = async (id: string) => {
-    const { friendRequest, targetRequest } = await this.findFriendsRequests(id);
-
-    friendRequest.status = FriendStatus.REJECTED;
-    await friendRequest.save();
-
-    targetRequest.status = FriendStatus.REJECTED;
-    await targetRequest.save();
-  };
-
-  findFriendsRequests = async (id: string) => {
-    const friendRequest = await Friend.findOneBy({ id, status: FriendStatus.ACCEPTED });
-
-    if (!friendRequest) {
-      throw new FriendRequestNotFound();
-    }
-
-    const targetRequest = await Friend.findOneBy({
-      user_id: friendRequest?.receiver_id,
-      receiver_id: friendRequest?.user_id,
-      status: FriendStatus.ACCEPTED,
-    });
-
-    if (!targetRequest) {
-      throw new FriendRequestNotFound();
-    }
-
-    return { friendRequest, targetRequest };
   };
 }

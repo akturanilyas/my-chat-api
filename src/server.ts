@@ -20,7 +20,7 @@ const httpServer = app
       // this is only called on ctrl+c, not restart
       process.kill(process.pid, 'SIGINT');
     });
-    process.on('uncaughtException', (err) => {
+    process.on('uncaughtException', err => {
       console.log(`Uncaught Exception: ${err.message}`);
       process.exit(1);
     });
