@@ -27,7 +27,7 @@ export class Friend extends AbstractModel {
 
   @Column({
     type: 'varchar',
-    default: FriendStatus.PENDING,
+    nullable: false,
   })
   status: FriendStatus;
 }

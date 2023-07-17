@@ -15,7 +15,7 @@ export class FriendService {
     }
 
     const friendRequest = Friend.create({
-      status: FriendStatus.PENDING,
+      status: FriendStatus.RECEIVED,
       receiver_id: userId,
       user_id: global.user_id,
     });
@@ -23,7 +23,7 @@ export class FriendService {
     await friendRequest.save();
 
     const targetRequest = Friend.create({
-      status: FriendStatus.PENDING,
+      status: FriendStatus.SENT,
       user_id: userId,
       receiver_id: global.user_id,
     });
@@ -48,7 +48,7 @@ export class FriendService {
   acceptFriend = async (id: string) => {
     const { friendRequest, targetRequest } = await this.findFriendsRequests({
       id,
-      status: FriendStatus.PENDING,
+      status: FriendStatus.RECEIVED,
     });
 
     friendRequest.status = FriendStatus.ACCEPTED;
@@ -66,7 +66,7 @@ export class FriendService {
   rejectFriend = async (id: string) => {
     const { friendRequest, targetRequest } = await this.findFriendsRequests({
       id,
-      status: FriendStatus.PENDING,
+      status: FriendStatus.RECEIVED,
     });
 
     friendRequest.status = FriendStatus.REJECTED;
@@ -102,7 +102,8 @@ export class FriendService {
     const targetRequest = await Friend.findOneBy({
       user_id: friendRequest?.receiver_id,
       receiver_id: friendRequest?.user_id,
-      status,
+      status:
+        status === FriendStatus.RECEIVED ? FriendStatus.SENT : FriendStatus.RECEIVED,
     });
 
     if (!targetRequest) {
@@ -114,7 +115,7 @@ export class FriendService {
 
   getFriendRequests = async () => {
     const requests = await Friend.find({
-      where: { receiver_id: global.user_id, status: FriendStatus.PENDING },
+      where: { receiver_id: global.user_id, status: FriendStatus.RECEIVED },
       relations: { receiver: true, requester: true },
     });
 
