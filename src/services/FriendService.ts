@@ -1,7 +1,10 @@
+import { Brackets } from 'typeorm';
 import { Friend } from '../models/Friend';
 import { FriendStatus } from '../enums/friendStatus';
 import { FriendRequestNotFound } from '../exceptions/friend/FriendRequestNotFound';
 import { FriendRequestAlreadyExist } from '../exceptions/friend/FriendRequestAlreadyExist';
+import { User } from '../models/User';
+import { databaseService } from '../server';
 
 export class FriendService {
   addFriend = async (userId: string) => {
@@ -120,5 +123,24 @@ export class FriendService {
     });
 
     return requests;
+  };
+
+  getFriends = async ({ name }: { name?: string }) => {
+    const friends = await databaseService.source
+      .getRepository(Friend)
+      .createQueryBuilder('friends')
+      .where('friends.user_id = :id', { id: global.user_id })
+      .andWhere(
+        new Brackets(qb => {
+          qb.where('users.first_name LIKE :search', { search: `%${name || ''}%` });
+          qb.orWhere('users.last_name LIKE :search', { search: `%${name || ''}%` });
+        }),
+      )
+      .leftJoinAndMapOne('friends.user', User, 'users', 'friends.user_id = users.id', {
+        id: global.user_id,
+      })
+      .getMany();
+
+    return friends;
   };
 }

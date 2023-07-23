@@ -6,6 +6,7 @@ import { RemoveFriendResource } from '../resources/friend/RemoveFriendResource';
 import { FriendRequestListResource } from '../resources/friend/FriendRequestListResource';
 import { SuccessDataResource } from '../resources/SuccessDataResource';
 import { AcceptFriendResource } from '../resources/friend/AcceptFriendResource';
+import { FriendListResource } from '../resources/friend/FriendListResource';
 
 export default class FriendController extends AbstractController {
   async addFriend(req: Request, res: Response): Promise<Response> {
@@ -52,6 +53,16 @@ export default class FriendController extends AbstractController {
     const requests = await service.getFriendRequests();
 
     const resource = new FriendRequestListResource({ resource: requests });
+
+    return res.status(200).json(resource);
+  };
+
+  getFriends = async (req: Request, res: Response) => {
+    const service = new FriendService();
+
+    const friends = await service.getFriends({ name: req.query.name as string });
+
+    const resource = new FriendListResource({ resource: friends });
 
     return res.status(200).json(resource);
   };

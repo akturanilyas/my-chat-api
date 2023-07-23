@@ -41,4 +41,10 @@ export const routes: Array<IRoute> = [
     handler: controller.rejectFriend,
     middlewares: [Middleware.TOKEN_CHECKER],
   },
+  {
+    path: `/api${ENDPOINT.FRIENDS}`,
+    method: HttpMethod.GET,
+    handler: controller.getFriends,
+    middlewares: [Middleware.TOKEN_CHECKER],
+  },
 ];
