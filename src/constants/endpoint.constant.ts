@@ -5,6 +5,8 @@ export const ENDPOINT = {
   SELF: '/self',
   SEARCH_USERS: '/search-users',
   FRIENDS: '/friends',
+  MESSAGES: '/messages',
+  CHATS: '/chats',
   ACCEPT: '/accept',
   REJECT: '/reject',
   REMOVE: '/remove',

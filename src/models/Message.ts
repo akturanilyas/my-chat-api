@@ -4,11 +4,11 @@ import { Chat } from './Chat';
 
 @Entity('messages')
 export class Message extends AbstractModel {
-  @Column({ type: 'int' })
-  sender_id: number;
+  @Column({ type: 'varchar', length: 40 })
+  sender_id: string;
 
-  @Column({ type: 'int' })
-  chat_id: number;
+  @Column({ type: 'varchar', length: 40 })
+  chat_id: string;
 
   @Column({ type: 'text' })
   text: string;

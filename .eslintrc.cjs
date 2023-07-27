@@ -49,6 +49,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', {'devDependencies': true}],
     '@typescript-eslint/no-explicit-any': 'error',
     'import/no-cycle': ['off'],
+    'no-empty-interface': 'off',
     'class-methods-use-this': 'off',
     radix: 'off',
     'import/prefer-default-export': 'off',
@@ -61,7 +62,7 @@ module.exports = {
     'lines-between-class-members': 'off',
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'warn',
-    'linebreak-style': ["error", "unix"],
+    'linebreak-style': ['error', 'unix'],
     'no-unreachable': 'error',
     'no-underscore-dangle': 'off',
     'newline-before-return': 'error'
