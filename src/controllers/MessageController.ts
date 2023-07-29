@@ -6,11 +6,11 @@ import { MessageCreateResource } from '../resources/message/MessageCreateResourc
 
 export default class MessageController extends AbstractController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const { user_id } = req.body;
+    const { id } = req.params;
 
     const service = new MessageService();
 
-    const messages = await service.getMessages(user_id);
+    const messages = await service.getMessages({ id });
 
     const resource = new MessageListResource({ resource: messages });
 
@@ -18,11 +18,15 @@ export default class MessageController extends AbstractController {
   }
 
   public async store(req: Request, res: Response): Promise<Response> {
-    const { user_id } = req.body;
+    const { id } = req.params;
+    const { text } = req.body;
 
     const service = new MessageService();
 
-    const message = await service.createMessage(user_id);
+    const message = await service.createMessage({
+      chatId: id,
+      text,
+    });
 
     const resource = new MessageCreateResource({ resource: message });
 

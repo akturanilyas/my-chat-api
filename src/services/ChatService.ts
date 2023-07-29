@@ -1,13 +1,8 @@
 import { Chat } from '../models/Chat';
-import { User } from '../models/User';
-import { ChatAlreadyExist } from '../exceptions/chat/FriendRequestAlreadyExist';
+import { UsersChat } from '../models/UsersChat';
 
 export class ChatService {
-  public getChats = async (): Promise<Array<Chat>> => {
-    const chats = await Chat.find({ where: { user_id: global.user_id } });
-
-    return chats;
-  };
+  public getChats = async (): Promise<Array<Chat>> => [];
 
   public createChat = async ({
     targetId,
@@ -16,23 +11,55 @@ export class ChatService {
     targetId: string;
     targetType: string;
   }) => {
-    // TODO If else condition
-    await User.findOneOrFail({ where: { id: targetId } });
+    const chat = await Chat.create({}).save();
 
-    let chat = await Chat.findOneBy({
+    await this.createChatUserPair({ chatId: chat.id, targetId, targetType });
+
+    return chat;
+  };
+
+  public createChatUserPair = async ({
+    chatId,
+    targetId,
+    targetType,
+  }: {
+    chatId: string;
+    targetId: string;
+    targetType: string;
+  }) => {
+    const chat = await UsersChat.create({
+      chat_id: chatId,
       target_type: targetType,
       target_id: targetId,
       user_id: global.user_id,
-    });
+    }).save();
 
-    if (chat) {
-      throw new ChatAlreadyExist();
-    }
+    const targetChat = await UsersChat.create({
+      chat_id: chatId,
+      user_id: targetId,
+      target_type: targetType,
+      target_id: global.user_id,
+    }).save();
 
-    chat = await Chat.create({
+    return {
+      chat,
+      targetChat,
+    };
+  };
+
+  public findChatUser = async ({
+    chatId,
+    targetId,
+    targetType,
+  }: {
+    chatId: string;
+    targetId: string;
+    targetType: string;
+  }) => {
+    const chat = await UsersChat.create({
+      chat_id: chatId,
       target_type: targetType,
       target_id: targetId,
-      user_id: global.user_id,
     }).save();
 
     return chat;

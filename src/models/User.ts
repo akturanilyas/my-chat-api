@@ -34,7 +34,7 @@ export class User extends AbstractModel {
   })
   age?: number;
 
-  @OneToMany(() => Chat, chat => chat.user, {
+  @OneToMany(() => Chat, chat => chat.usersChats, {
     createForeignKeyConstraints: false,
   })
   chats?: Array<Chat>;

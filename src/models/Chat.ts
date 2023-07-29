@@ -1,44 +1,28 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
 import { AbstractModel } from './AbstractModel';
 import { Message } from './Message';
 import { User } from './User';
-import { TargetType } from '../enums/targetType';
+import { UsersChat } from './UsersChat';
 
 @Entity('chats')
 export class Chat extends AbstractModel {
   @Column('varchar', { length: 20 })
   type: string;
 
-  @Column({
-    type: 'string',
-    nullable: false,
-  })
-  user_id: string;
-
-  @Column({
-    type: 'string',
-    nullable: false,
-  })
-  target_id: string;
-
-  @Column('varchar', {
-    length: 20,
-    nullable: true,
-    default: TargetType.USER,
-  })
-  target_type: string;
-
-  @ManyToOne(() => User, user => user.userChats, {
+  @OneToMany(() => UsersChat, usersChat => usersChat.chat, {
     createForeignKeyConstraints: false,
   })
-  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-  user: User;
+  usersChats: UsersChat[];
 
-  @ManyToOne(() => User, user => user.userChats, {
+  @OneToMany(() => UsersChat, usersChat => usersChat.user, {
+    eager: true,
     createForeignKeyConstraints: false,
   })
-  @JoinColumn({ name: 'target_id', referencedColumnName: 'id' })
-  target: User;
+  @JoinColumn({
+    name: 'user_id',
+    referencedColumnName: 'id',
+  })
+  users: User[];
 
   @OneToMany(() => Message, message => message.chat, {
     eager: true,

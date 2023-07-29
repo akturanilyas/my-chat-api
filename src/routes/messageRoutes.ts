@@ -8,13 +8,13 @@ const controller = new MessageController();
 
 export const routes: Array<IRoute> = [
   {
-    path: `/api${ENDPOINT.MESSAGES}`,
+    path: `/api${ENDPOINT.CHATS}/:id${ENDPOINT.MESSAGES}`,
     method: HttpMethod.POST,
     handler: controller.store,
     middlewares: [Middleware.TOKEN_CHECKER],
   },
   {
-    path: `/api${ENDPOINT.MESSAGES}`,
+    path: `/api${ENDPOINT.CHATS}/:id${ENDPOINT.MESSAGES}`,
     method: HttpMethod.GET,
     handler: controller.index,
     middlewares: [Middleware.TOKEN_CHECKER],

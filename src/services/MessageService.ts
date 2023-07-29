@@ -1,16 +1,16 @@
 import { Message } from '../models/Message';
 import { Chat } from '../models/Chat';
 
+export interface GetMessageInterface {
+  id?: string;
+  target_id?: string;
+  target_type?: string;
+}
+
 export class MessageService {
-  public getMessages = async ({
-    targetId,
-    targetType,
-  }: {
-    targetId: string;
-    targetType: string;
-  }): Promise<Array<Message>> => {
+  public getMessages = async (filter: GetMessageInterface): Promise<Array<Message>> => {
     const chat = await Chat.findOneOrFail({
-      where: { target_id: targetId, target_type: targetType },
+      where: filter,
     });
 
     const messages = await Message.find({
