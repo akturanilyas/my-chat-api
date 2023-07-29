@@ -2,7 +2,7 @@ import * as console from 'console';
 import environment from './builders/envBuilder';
 import { app } from './app';
 import jobs from './jobs';
-import socket from './socket';
+import socketBuilder from './socketBuilder';
 import { EnvironmentType } from './enums/environmentType';
 import { DatabaseService } from './services/DatabaseService';
 
@@ -32,7 +32,7 @@ const httpServer = app
   }
 
   await httpServer;
-  await socket();
+  await socketBuilder();
   jobs();
 })();
 

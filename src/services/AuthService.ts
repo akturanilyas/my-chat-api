@@ -6,6 +6,8 @@ import { UserNotFoundException } from '../exceptions/user/UserNotFoundException'
 import { PasswordMismatchException } from '../exceptions/user/PasswordMismatchException';
 import { UserAlreadyExistsException } from '../exceptions/user/UserAlreadyExistsException';
 import { RegisterInterface } from './AuthService.interface';
+import { serializeToken } from '../utils/commonUtil';
+import { UnauthorizedException } from '../exceptions/user/UnauthorizedException';
 
 export class AuthService {
   async register({ user }: { user: RegisterInterface }): Promise<User> {
@@ -38,5 +40,26 @@ export class AuthService {
       ...user,
       access_token: jwt.sign({ id: user.id }, environment.jwt_token as string),
     };
+  };
+
+  public checkToken = (token: string) => {
+    let jwtPayload;
+
+    try {
+      const serializedToken = serializeToken(token);
+
+      jwtPayload = jwt.verify(serializedToken, environment.jwt_token as string);
+
+      const { id } = jwtPayload;
+      const newToken = jwt.sign({ id }, environment.jwt_token as string, {});
+
+      global.token = newToken;
+      global.userId = id;
+
+      return { userId: id, newToken, jwtPayload };
+    } catch (error) {
+      // If token is not valid, respond with 401 (unauthorized)
+      throw new UnauthorizedException();
+    }
   };
 }

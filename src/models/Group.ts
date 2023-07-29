@@ -10,7 +10,7 @@ export class Group extends AbstractModel {
   @Column('varchar', { length: 190 })
   description: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'varchar', nullable: false })
   chat_id: number;
 
   @OneToOne(() => Chat, {

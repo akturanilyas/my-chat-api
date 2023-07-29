@@ -1,12 +1,3 @@
-import { AbstractResource } from '../AbstractResource';
-import { Message } from '../../models/Message';
+import { MessageResource } from './MessageResource';
 
-export class MessageCreateResource extends AbstractResource {
-  public toJson(resource: object): object {
-    const messages = resource as Message;
-
-    return {
-      id: messages.id,
-    };
-  }
-}
+export class MessageCreateResource extends MessageResource {}

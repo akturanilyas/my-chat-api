@@ -1,15 +1,15 @@
 import { AbstractResource } from '../AbstractResource';
 import { Message } from '../../models/Message';
 
-export class MessageListResource extends AbstractResource {
+export class MessageResource extends AbstractResource {
   public toJson(resource: object): object {
-    const messages = resource as Array<Message>;
+    const message = resource as Message;
 
-    return messages.map(message => ({
+    return {
       id: message.id,
       sender: { id: message.sender_id, name: message.sender.getFullName() },
       chat_id: message.chat_id,
       text: message.text,
-    }));
+    };
   }
 }

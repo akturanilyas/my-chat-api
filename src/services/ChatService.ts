@@ -11,6 +11,19 @@ export class ChatService {
     return usersChats;
   };
 
+  public getUserChats = async ({
+    chat_id,
+  }: {
+    chat_id: string;
+  }): Promise<Array<UsersChat>> => {
+    const chat = await UsersChat.find({
+      where: { chat_id },
+      relations: { chat: true, user: true, target: true },
+    });
+
+    return chat;
+  };
+
   public createChat = async ({
     targetId,
     targetType,

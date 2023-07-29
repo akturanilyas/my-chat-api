@@ -1,4 +1,5 @@
 import { Message } from '../models/Message';
+import { getUserIdByToken } from '../utils/commonUtil';
 
 export interface GetMessageInterface {
   chat_id?: string;
@@ -23,9 +24,18 @@ export class MessageService {
     chatId: string;
     text: string;
   }): Promise<Message> => {
-    const message = Message.create({ text, chat_id: chatId, sender_id: global.userId });
+    let message: Message = Message.create({
+      text,
+      chat_id: chatId,
+      sender_id: global.userId,
+    });
 
     await message.save();
+
+    message = await Message.findOneOrFail({
+      where: { id: message.id },
+      relations: { sender: true, chat: true },
+    });
 
     return message;
   };
