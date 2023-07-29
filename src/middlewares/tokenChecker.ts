@@ -21,8 +21,8 @@ export const tokenChecker = (req: Request, res: Response, next: NextFunction) =>
 
     res.setHeader('token', newToken);
     global.token = newToken;
-    global.user_id = id;
-    req.headers.user_id = id;
+    global.userId = id;
+    req.headers.userId = id;
   } catch (error) {
     // If token is not valid, respond with 401 (unauthorized)
     throw new UnauthorizedException();

@@ -13,7 +13,7 @@ export default class ChatController extends BaseController {
   }
 
   static createChat = async (req: Request, res: Response) => {
-    const { targetId, targetType } = req.body;
+    const { id: targetId, targetType } = req.body;
 
     const chat = await new ChatService().createChat({ targetId, targetType });
 

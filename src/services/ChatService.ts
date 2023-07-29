@@ -2,7 +2,14 @@ import { Chat } from '../models/Chat';
 import { UsersChat } from '../models/UsersChat';
 
 export class ChatService {
-  public getChats = async (): Promise<Array<Chat>> => [];
+  public getChats = async (): Promise<Array<UsersChat>> => {
+    const usersChats = await UsersChat.find({
+      where: { user_id: global.userId },
+      relations: { chat: true, user: true, target: true },
+    });
+
+    return usersChats;
+  };
 
   public createChat = async ({
     targetId,
@@ -31,14 +38,14 @@ export class ChatService {
       chat_id: chatId,
       target_type: targetType,
       target_id: targetId,
-      user_id: global.user_id,
+      user_id: global.userId,
     }).save();
 
     const targetChat = await UsersChat.create({
       chat_id: chatId,
       user_id: targetId,
       target_type: targetType,
-      target_id: global.user_id,
+      target_id: global.userId,
     }).save();
 
     return {

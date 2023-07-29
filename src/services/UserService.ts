@@ -29,7 +29,7 @@ export class UserService {
     const users = await databaseService.source
       .getRepository(User)
       .createQueryBuilder('users')
-      .where('users.id != :id', { id: global.user_id })
+      .where('users.id != :id', { id: global.userId })
       .andWhere(
         new Brackets(qb => {
           qb.where('users.first_name LIKE :search', { search: `%${name || ''}%` });
@@ -41,7 +41,7 @@ export class UserService {
         Friend,
         'friends',
         'friends.receiver_id = users.id and friends.user_id = :id',
-        { id: global.user_id },
+        { id: global.userId },
       )
       .getMany();
 

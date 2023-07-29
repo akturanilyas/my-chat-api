@@ -27,7 +27,7 @@ export class MessageService {
     chatId: string;
     text: string;
   }): Promise<Message> => {
-    const _message = Message.create({ text, chat_id: chatId, sender_id: global.user_id });
+    const _message = Message.create({ text, chat_id: chatId, sender_id: global.userId });
 
     await _message.save();
 

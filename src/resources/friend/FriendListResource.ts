@@ -12,7 +12,7 @@ export class FriendListResource extends AbstractResource {
 
     return friends.map(friend => ({
       id: friend.id,
-      user: { name: friend.user.getFullName() },
+      user: { id: friend.user_id, name: friend.user.getFullName() },
     }));
   }
 }
