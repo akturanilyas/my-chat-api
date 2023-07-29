@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { RegisterResource } from '../resources/auth/RegisterResource';
 import { AuthService } from '../services/AuthService';
-import BaseController from './BaseController';
+import AbstractController from './BaseController';
 import { LoginResource } from '../resources/auth/LoginResource';
 import { UserNotFoundException } from '../exceptions/user/UserNotFoundException';
 
-export default class AuthController extends BaseController {
+export default class AuthController extends AbstractController {
   static async register(req: Request, res: Response): Promise<Response> {
     const user = await new AuthService().register({
       user: { ...req.body },
@@ -13,7 +13,7 @@ export default class AuthController extends BaseController {
 
     const resource = new RegisterResource({ resource: user });
 
-    return res.status(201).json(resource.toJson());
+    return res.status(201).json(resource);
   }
 
   static async loginUser(req: Request, res: Response): Promise<Response> {
@@ -29,6 +29,6 @@ export default class AuthController extends BaseController {
 
     const resource = new LoginResource({ resource: user });
 
-    return res.status(201).json(resource.toJson());
+    return res.status(201).json(resource);
   }
 }

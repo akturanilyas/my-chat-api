@@ -1,12 +1,12 @@
 import * as console from 'console';
-import { DataSource } from 'typeorm';
 import environment from './builders/envBuilder';
 import { app } from './app';
-import { ormConfig } from './config/ormConfig';
 import jobs from './jobs';
 import socket from './socket';
+import { EnvironmentType } from './enums/environmentType';
+import { DatabaseService } from './services/DatabaseService';
 
-export const connectionSource: DataSource = new DataSource(ormConfig);
+export const databaseService: DatabaseService = new DatabaseService();
 
 const httpServer = app
   .listen(environment.port, async () => {
@@ -27,10 +27,13 @@ const httpServer = app
   });
 
 (async () => {
-  await connectionSource.initialize();
+  if (environment.nodeEnv === EnvironmentType.DEVELOPMENT) {
+    await databaseService.initialize();
+  }
+
   await httpServer;
   await socket();
-  await jobs();
+  jobs();
 })();
 
 export default httpServer;

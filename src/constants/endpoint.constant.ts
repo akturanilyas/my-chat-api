@@ -4,4 +4,12 @@ export const ENDPOINT = {
   REGISTER: '/register',
   SELF: '/self',
   SEARCH_USERS: '/search-users',
+  FRIENDS: '/friends',
+  MESSAGES: '/messages',
+  CHATS: '/chats',
+  ACCEPT: '/accept',
+  REJECT: '/reject',
+  REMOVE: '/remove',
+  REQUESTS: '/requests',
+  ADD: '/add',
 };

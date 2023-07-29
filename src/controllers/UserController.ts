@@ -19,7 +19,7 @@ export default class UserController extends BaseController {
       name: req.query.name as string,
     });
 
-    const resource = new SearchResource({ resource: user }).toJson();
+    const resource = new SearchResource({ resource: user });
 
     return res.status(200).json(resource);
   }

@@ -1,5 +1,15 @@
 import request from 'supertest';
 import { app } from '../app';
+import { AuthService } from '../services/AuthService';
+
+type LoginScenarioDTO = {
+  email: string;
+  password: string;
+  age?: number;
+  last_name: string;
+  first_name: string;
+  username: string;
+};
 
 export const postRequest = async ({
   path,
@@ -32,4 +42,17 @@ export const getRequest = async ({
     .auth(token, { type: 'bearer' });
 
   return response;
+};
+
+export const loginScenario = async (user: LoginScenarioDTO) => {
+  const authService = new AuthService();
+
+  const _user = await authService.login({ ...user });
+  global.token = _user.access_token;
+
+  return _user;
+};
+
+export const registerScenario = async () => {
+  //
 };

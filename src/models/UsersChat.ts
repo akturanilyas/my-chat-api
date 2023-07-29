@@ -4,7 +4,7 @@ import { Chat } from './Chat';
 import { User } from './User';
 
 @Entity('users_chats')
-export class UsersChats extends AbstractModel {
+export class UsersChat extends AbstractModel {
   @Column({
     type: 'string',
     nullable: false,
