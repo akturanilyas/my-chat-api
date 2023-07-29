@@ -34,6 +34,9 @@ export class AuthService {
     const validPass = await compare(password, user.password);
     if (!validPass) throw new PasswordMismatchException();
 
-    return { ...user, access_token: jwt.sign({ id: user.id }, environment.jwt_token) };
+    return {
+      ...user,
+      access_token: jwt.sign({ id: user.id }, environment.jwt_token as string),
+    };
   };
 }
