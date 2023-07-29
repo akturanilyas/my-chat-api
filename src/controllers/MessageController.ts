@@ -10,7 +10,7 @@ export default class MessageController extends AbstractController {
 
     const service = new MessageService();
 
-    const messages = await service.getMessages({ id });
+    const messages = await service.getMessages({ chat_id: id });
 
     const resource = new MessageListResource({ resource: messages });
 

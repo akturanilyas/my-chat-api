@@ -7,6 +7,9 @@ export class MessageListResource extends AbstractResource {
 
     return messages.map(message => ({
       id: message.id,
+      sender_id: message.sender_id,
+      sender: { id: message.sender_id, name: message.sender.getFullName() },
+      chat_id: message.chat_id,
     }));
   }
 }

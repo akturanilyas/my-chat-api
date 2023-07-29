@@ -3,6 +3,7 @@ import { Column, Entity, OneToMany } from 'typeorm';
 import { AbstractModel } from './AbstractModel';
 import { Friend } from './Friend';
 import { Chat } from './Chat';
+import { Message } from './Message';
 
 @Entity('users')
 export class User extends AbstractModel {
@@ -53,6 +54,9 @@ export class User extends AbstractModel {
     createForeignKeyConstraints: false,
   })
   userChats: Friend[];
+
+  @OneToMany(() => Message, message => message.sender)
+  messages: Array<Message>;
 
   getFullName = () => `${this.first_name} ${this.last_name}`;
 }

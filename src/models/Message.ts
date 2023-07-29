@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { AbstractModel } from './AbstractModel';
 import { Chat } from './Chat';
+import { User } from './User';
 
 @Entity('messages')
 export class Message extends AbstractModel {
@@ -21,4 +22,13 @@ export class Message extends AbstractModel {
     referencedColumnName: 'id',
   })
   chat: Chat;
+
+  @ManyToOne(() => User, user => user.messages, {
+    createForeignKeyConstraints: false,
+  })
+  @JoinColumn({
+    name: 'sender_id',
+    referencedColumnName: 'id',
+  })
+  sender: User;
 }
