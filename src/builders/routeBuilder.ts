@@ -5,6 +5,7 @@ import { map } from 'lodash';
 import path from 'path';
 import { Middleware } from '../enums/middleware';
 import { IRoute } from '../routes/IRoute.interface';
+import { databaseService } from '../server';
 
 const controllerDir = path.join(process.cwd(), 'src/routes');
 const middlewaresDir = path.join(process.cwd(), 'src/middlewares');

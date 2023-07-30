@@ -7,6 +7,7 @@ export class AddFriendResource extends AbstractResource {
 
     return {
       id: _resource.id,
+      receiver_id: _resource.receiver_id,
     };
   }
 }

@@ -5,6 +5,7 @@ import { FriendRequestNotFound } from '../exceptions/friend/FriendRequestNotFoun
 import { FriendRequestAlreadyExist } from '../exceptions/friend/FriendRequestAlreadyExist';
 import { User } from '../models/User';
 import { databaseService } from '../server';
+import { UsersChat } from '../models/UsersChat';
 
 export class FriendService {
   addFriend = async (userId: string) => {

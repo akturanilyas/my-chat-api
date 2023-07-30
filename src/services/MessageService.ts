@@ -1,5 +1,4 @@
 import { Message } from '../models/Message';
-import { getUserIdByToken } from '../utils/commonUtil';
 
 export interface GetMessageInterface {
   chat_id?: string;
@@ -12,6 +11,7 @@ export class MessageService {
     const messages = await Message.find({
       where: filter,
       relations: { sender: true, chat: true },
+      order: { created_at: 'ASC' },
     });
 
     return messages;
