@@ -58,7 +58,7 @@ export class ChatService {
     });
 
     const targetChat = await UsersChat.findOneOrFail({
-      where: { user_id: chat.target_id, target_id: global.userId },
+      where: { user_id: chat.target_id, target_id: chat.user_id },
       relations: { chat: true, user: true, target: true },
     });
 
