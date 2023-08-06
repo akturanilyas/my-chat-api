@@ -1,3 +1,4 @@
+import { last } from 'lodash';
 import { AbstractResource } from '../AbstractResource';
 import { UsersChat } from '../../models/UsersChat';
 
@@ -17,8 +18,10 @@ export class ChatResource extends AbstractResource {
       },
       target_id: userChat.target_id,
       target_type: userChat.target_type,
-      message: 'tempMessage',
-      time: '20:24',
+      message: {
+        text: last(userChat.chat.messages)?.text,
+        time: last(userChat.chat.messages)?.created_at,
+      },
     };
   }
 }
