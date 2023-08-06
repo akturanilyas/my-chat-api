@@ -3,6 +3,7 @@ import environment from '../builders/envBuilder';
 
 const entities = {
   development: ['src/models/**/*.ts'],
+  test: ['src/models/**/*.ts'],
   production: ['dist/models/**/*.js'],
 };
 
