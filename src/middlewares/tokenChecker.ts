@@ -1,32 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
-import * as jwt from 'jsonwebtoken';
-import { UnauthorizedException } from '../exceptions/user/UnauthorizedException';
-import environment from '../builders/envBuilder';
-import { serializeToken } from '../utils/commonUtil';
+import { AuthService } from '../services/AuthService';
 
 export const tokenChecker = (req: Request, res: Response, next: NextFunction) => {
   // Get the jwt token from the head
   const token = <string>req.headers['auth-token'] ?? <string>req.headers.authorization;
 
-  let jwtPayload;
+  const authService = new AuthService();
 
-  try {
-    const serializedToken = serializeToken(token);
+  const { newToken, userId, jwtPayload } = authService.checkToken(token);
 
-    jwtPayload = jwt.verify(serializedToken, environment.jwt_token as string);
-    res.locals.jwtPayload = jwtPayload;
+  res.locals.jwtPayload = jwtPayload;
 
-    const { id } = jwtPayload;
-    const newToken = jwt.sign({ id }, environment.jwt_token as string, {});
+  res.setHeader('token', newToken);
 
-    res.setHeader('token', newToken);
-    global.token = newToken;
-    global.user_id = id;
-    req.headers.user_id = id;
-  } catch (error) {
-    // If token is not valid, respond with 401 (unauthorized)
-    throw new UnauthorizedException();
-  }
+  req.headers.userId = userId;
 
   next();
 };

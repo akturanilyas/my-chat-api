@@ -1,15 +1,13 @@
-import { Brackets } from 'typeorm';
+import { Like } from 'typeorm';
 import { Friend } from '../models/Friend';
 import { FriendStatus } from '../enums/friendStatus';
 import { FriendRequestNotFound } from '../exceptions/friend/FriendRequestNotFound';
 import { FriendRequestAlreadyExist } from '../exceptions/friend/FriendRequestAlreadyExist';
-import { User } from '../models/User';
-import { databaseService } from '../server';
 
 export class FriendService {
   addFriend = async (userId: string) => {
     const request = await Friend.findOneBy({
-      user_id: global.user_id,
+      user_id: global.userId,
       receiver_id: userId,
     });
 
@@ -20,7 +18,7 @@ export class FriendService {
     const friendRequest = Friend.create({
       status: FriendStatus.RECEIVED,
       receiver_id: userId,
-      user_id: global.user_id,
+      user_id: global.userId,
     });
 
     await friendRequest.save();
@@ -28,7 +26,7 @@ export class FriendService {
     const targetRequest = Friend.create({
       status: FriendStatus.SENT,
       user_id: userId,
-      receiver_id: global.user_id,
+      receiver_id: global.userId,
     });
 
     await targetRequest.save();
@@ -118,7 +116,7 @@ export class FriendService {
 
   getFriendRequests = async () => {
     const requests = await Friend.find({
-      where: { receiver_id: global.user_id, status: FriendStatus.RECEIVED },
+      where: { receiver_id: global.userId, status: FriendStatus.RECEIVED },
       relations: { receiver: true, requester: true },
     });
 
@@ -126,20 +124,16 @@ export class FriendService {
   };
 
   getFriends = async ({ name }: { name?: string }) => {
-    const friends = await databaseService.source
-      .getRepository(Friend)
-      .createQueryBuilder('friends')
-      .where('friends.user_id = :id', { id: global.user_id })
-      .andWhere(
-        new Brackets(qb => {
-          qb.where('users.first_name LIKE :search', { search: `%${name || ''}%` });
-          qb.orWhere('users.last_name LIKE :search', { search: `%${name || ''}%` });
-        }),
-      )
-      .leftJoinAndMapOne('friends.user', User, 'users', 'friends.user_id = users.id', {
-        id: global.user_id,
-      })
-      .getMany();
+    const friends = await Friend.find({
+      where: {
+        user_id: global.userId,
+        status: FriendStatus.ACCEPTED,
+        receiver: {
+          first_name: name ? Like(`%${name}%`) : Like('%%'),
+        },
+      },
+      relations: { requester: true, receiver: true },
+    });
 
     return friends;
   };

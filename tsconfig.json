@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "baseUrl": "./src",
     "module": "NodeNext",
-    "target": "es6",
+    "target": "ES6",
     "lib": [
       "ESNext"
     ],

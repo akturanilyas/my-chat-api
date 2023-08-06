@@ -11,4 +11,8 @@ export const serializeToken = (token: string): string => {
 };
 
 export const getUserIdByToken = (token: string): string =>
-  jwt.verify(token, environment.jwt_token as string).id;
+  (
+    jwt.verify(token, environment.jwt_token as string) as {
+      id: string;
+    }
+  ).id;

@@ -58,6 +58,7 @@ module.exports = {
     'camelcase': 'off',
     'no-await-in-loop': 'off',
     'no-restricted-syntax': 'off',
+    'no-non-null-assertion': 'off',
     'eol-last': ['error', 'always'],
     'lines-between-class-members': 'off',
     'no-shadow': 'off',

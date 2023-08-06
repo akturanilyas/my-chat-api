@@ -2,7 +2,8 @@ import { MinLength } from 'class-validator';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { AbstractModel } from './AbstractModel';
 import { Friend } from './Friend';
-import { Chat } from './Chat';
+import { Message } from './Message';
+import { UsersChat } from './UsersChat';
 
 @Entity('users')
 export class User extends AbstractModel {
@@ -34,10 +35,10 @@ export class User extends AbstractModel {
   })
   age?: number;
 
-  @OneToMany(() => Chat, chat => chat.usersChats, {
+  @OneToMany(() => UsersChat, chat => chat.user, {
     createForeignKeyConstraints: false,
   })
-  chats?: Array<Chat>;
+  chats?: Array<UsersChat>;
 
   @OneToMany(() => Friend, user => user.requester, {
     createForeignKeyConstraints: false,
@@ -53,6 +54,9 @@ export class User extends AbstractModel {
     createForeignKeyConstraints: false,
   })
   userChats: Friend[];
+
+  @OneToMany(() => Message, message => message.sender)
+  messages: Array<Message>;
 
   getFullName = () => `${this.first_name} ${this.last_name}`;
 }
