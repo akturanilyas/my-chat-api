@@ -1,6 +1,11 @@
 import { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions';
 import environment from '../builders/envBuilder';
 
+const entities = {
+  development: ['src/models/**/*.ts'],
+  production: ['dist/models/**/*.js'],
+};
+
 export const ormConfig: DataSourceOptions = {
   type: 'mysql',
   host: environment.host,
@@ -12,7 +17,7 @@ export const ormConfig: DataSourceOptions = {
   migrationsTableName: 'migrations',
   logging: environment.debugEnabled,
   logger: 'file',
-  entities: ['src/models/**/*.ts', 'dist/models/**/*.js'],
+  entities: entities[environment.nodeEnv],
   subscribers: ['src/subscriber/**/*{.ts,.js}'],
   migrations: ['src/migrations/**/*{.ts,.js}'],
   dropSchema: false,

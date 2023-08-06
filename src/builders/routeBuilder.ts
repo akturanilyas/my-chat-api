@@ -5,10 +5,9 @@ import { map } from 'lodash';
 import path from 'path';
 import { Middleware } from '../enums/middleware';
 import { IRoute } from '../routes/IRoute.interface';
-import { databaseService } from '../server';
 
-const controllerDir = path.join(process.cwd(), 'src/routes');
-const middlewaresDir = path.join(process.cwd(), 'src/middlewares');
+const controllerDir = path.join(__dirname, '../routes');
+const middlewaresDir = path.join(__dirname, '../middlewares');
 
 const getMiddlewares = async (middlewares: Array<Middleware>) => {
   const functions: Array<() => void> = [];
@@ -41,7 +40,7 @@ const generateMethodFunction =
 
 const buildController = async (app: Express) => {
   for (const fileName of fs.readdirSync(controllerDir)) {
-    if (!fileName.endsWith('interface.ts')) {
+    if (!fileName.includes('interface.')) {
       const { routes } = await import(`${controllerDir}/${fileName}`);
 
       for (const route of routes as Array<IRoute>) {
