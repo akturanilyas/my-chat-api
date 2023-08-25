@@ -47,6 +47,6 @@ describe('AuthController', () => {
       path: `/api${ENDPOINT.AUTH}${ENDPOINT.LOGIN}`,
     });
 
-    expect(res.statusCode).toBe(201);
+    expect(res.statusCode).toBe(200);
   });
 });

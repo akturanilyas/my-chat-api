@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import AbstractController from './BaseController';
 import { FriendService } from '../services/FriendService';
 import { AddFriendResource } from '../resources/friend/AddFriendResource';
@@ -9,61 +9,53 @@ import { AcceptFriendResource } from '../resources/friend/AcceptFriendResource';
 import { FriendListResource } from '../resources/friend/FriendListResource';
 
 export default class FriendController extends AbstractController {
-  async addFriend(req: Request, res: Response): Promise<Response> {
+  async addFriend(req: Request): Promise<AddFriendResource> {
     const { user_id } = req.body;
 
     const service = new FriendService();
 
     const { friendRequest } = await service.addFriend(user_id);
 
-    const resource = new AddFriendResource({ resource: friendRequest });
-
-    return res.status(201).json(resource);
+    return new AddFriendResource({ resource: friendRequest, statusCode: 201 });
   }
 
-  async removeFriend(req: Request, res: Response): Promise<Response> {
+  async removeFriend(req: Request): Promise<RemoveFriendResource> {
     const service = new FriendService();
 
     const { friendRequest } = await service.removeFriend(req.body.user_id);
 
-    const resource = new RemoveFriendResource({ resource: friendRequest });
-
-    return res.status(200).json(resource);
+    return new RemoveFriendResource({ resource: friendRequest });
   }
 
-  acceptFriend = async (req: Request, res: Response) => {
+  acceptFriend = async (req: Request): Promise<AcceptFriendResource> => {
     const service = new FriendService();
 
     const { friendRequest } = await service.acceptFriend(req.params.id);
 
-    return res.status(200).json(new AcceptFriendResource({ resource: friendRequest }));
+    return new AcceptFriendResource({ resource: friendRequest });
   };
 
-  rejectFriend = async (req: Request, res: Response) => {
+  rejectFriend = async (req: Request): Promise<SuccessDataResource> => {
     const service = new FriendService();
 
     await service.rejectFriend(req.params.id);
 
-    return res.status(200).json(new SuccessDataResource({}));
+    return new SuccessDataResource({});
   };
 
-  getFriendRequests = async (req: Request, res: Response) => {
+  getFriendRequests = async (): Promise<FriendListResource> => {
     const service = new FriendService();
 
     const requests = await service.getFriendRequests();
 
-    const resource = new FriendRequestListResource({ resource: requests });
-
-    return res.status(200).json(resource);
+    return new FriendRequestListResource({ resource: requests });
   };
 
-  getFriends = async (req: Request, res: Response) => {
+  getFriends = async (req: Request): Promise<FriendListResource> => {
     const service = new FriendService();
 
     const friends = await service.getFriends({ name: req.query.name as string });
 
-    const resource = new FriendListResource({ resource: friends });
-
-    return res.status(200).json(resource);
+    return new FriendListResource({ resource: friends });
   };
 }

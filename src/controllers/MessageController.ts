@@ -1,23 +1,21 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import AbstractController from './BaseController';
 import { MessageService } from '../services/MessageService';
 import { MessageListResource } from '../resources/message/MessageListResource';
 import { MessageCreateResource } from '../resources/message/MessageCreateResource';
 
 export default class MessageController extends AbstractController {
-  public async index(req: Request, res: Response): Promise<Response> {
+  public async index(req: Request): Promise<MessageListResource> {
     const { id } = req.params;
 
     const service = new MessageService();
 
     const messages = await service.getMessages({ chat_id: id });
 
-    const resource = new MessageListResource({ resource: messages });
-
-    return res.status(201).json(resource);
+    return new MessageListResource({ resource: messages });
   }
 
-  public async store(req: Request, res: Response): Promise<Response> {
+  public async store(req: Request): Promise<MessageCreateResource> {
     const { id } = req.params;
     const { text } = req.body;
 
@@ -28,8 +26,6 @@ export default class MessageController extends AbstractController {
       text,
     });
 
-    const resource = new MessageCreateResource({ resource: message });
-
-    return res.status(201).json(resource);
+    return new MessageCreateResource({ resource: message });
   }
 }

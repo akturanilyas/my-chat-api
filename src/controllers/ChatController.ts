@@ -1,25 +1,21 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import BaseController from './BaseController';
 import { ChatService } from '../services/ChatService';
 import { ChatListResource } from '../resources/chat/ChatListResource';
 import { ChatResource } from '../resources/chat/ChatResource';
 
 export default class ChatController extends BaseController {
-  static async chats(req: Request, res: Response): Promise<Response> {
+  public static async chats(): Promise<ChatListResource> {
     const chats = await new ChatService().getChats();
 
-    const resource = new ChatListResource({ resource: chats });
-
-    return res.status(200).json(resource);
+    return new ChatListResource({ resource: chats });
   }
 
-  static createChat = async (req: Request, res: Response) => {
+  public static createChat = async (req: Request) => {
     const { id: targetId, targetType } = req.body;
 
     const { chat } = await new ChatService().createChat({ targetId, targetType });
 
-    const resource = new ChatResource({ resource: chat! });
-
-    return res.status(200).json(resource);
+    return new ChatResource({ resource: chat });
   };
 }

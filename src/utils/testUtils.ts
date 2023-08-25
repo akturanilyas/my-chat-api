@@ -14,15 +14,18 @@ type LoginScenarioDTO = {
 export const postRequest = async ({
   path,
   body,
+  token = '',
 }: {
   path: string;
   body: Record<string, unknown>;
+  token?: string;
 }) => {
   const response = await request(app)
     .post(path)
     .send(body)
     .set('Content-Type', 'application/json')
-    .set('Accept', 'application/json');
+    .set('Accept', 'application/json')
+    .auth(token, { type: 'bearer' });
 
   return response;
 };
@@ -49,6 +52,7 @@ export const loginScenario = async (user: LoginScenarioDTO) => {
 
   const _user = await authService.login({ ...user });
   global.token = _user.access_token;
+  global.userId = _user.id;
 
   return _user;
 };

@@ -5,6 +5,7 @@ import { map } from 'lodash';
 import path from 'path';
 import { Middleware } from '../enums/middleware';
 import { IRoute } from '../routes/IRoute.interface';
+import { AbstractResource } from '../resources/AbstractResource';
 
 const controllerDir = path.join(__dirname, '../routes');
 const middlewaresDir = path.join(__dirname, '../middlewares');
@@ -24,7 +25,6 @@ const generateMethodFunction =
   async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {
     if (route.validate) {
       const errors = await checkSchema(route.validate, ['body']).run(req);
-
       // TODO: [AKTURAN] handle errors
       if (
         map(errors, 'errors')
@@ -35,7 +35,11 @@ const generateMethodFunction =
       }
     }
 
-    return route.handler(req, res, next).catch(next);
+    const resourceClass = await route.handler(req, res, next).catch(next);
+
+    return res
+      .status((resourceClass as AbstractResource).statusCode)
+      .json((resourceClass as AbstractResource).data);
   };
 
 const buildController = async (app: Express) => {

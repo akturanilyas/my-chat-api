@@ -37,7 +37,7 @@ export class FriendService {
   removeFriend = async (userId: string) => {
     const { friendRequest, targetRequest } = await this.findFriendsRequests({
       userId,
-      status: FriendStatus.ACCEPTED,
+      status: FriendStatus.SENT,
     });
 
     await targetRequest?.softRemove();

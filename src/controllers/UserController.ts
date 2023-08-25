@@ -6,21 +6,17 @@ import { SelfResource } from '../resources/user/SelfResource';
 import { SearchResource } from '../resources/user/SearchResource';
 
 export default class UserController extends BaseController {
-  static async getSelf(req: Request, res: Response): Promise<Response> {
+  static async getSelf(): Promise<SelfResource> {
     const user: User | null = await new UserService().getSelf();
 
-    const resource = new SelfResource({ resource: user });
-
-    return res.status(200).json(resource);
+    return new SelfResource({ resource: user });
   }
 
-  static async searchUsers(req: Request, res: Response): Promise<Response> {
+  static async searchUsers(req: Request): Promise<SearchResource> {
     const user: User[] = await new UserService().searchUsers({
       name: req.query.name as string,
     });
 
-    const resource = new SearchResource({ resource: user });
-
-    return res.status(200).json(resource);
+    return new SearchResource({ resource: user });
   }
 }

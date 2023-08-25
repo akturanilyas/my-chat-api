@@ -30,14 +30,10 @@ describe('UserController', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toStrictEqual({
       age: userParams.age,
-      created_at: loginRes.created_at.toISOString(),
-      deleted_at: loginRes.deleted_at,
       email: loginRes.email,
       first_name: loginRes.first_name,
       id: loginRes.id,
       last_name: loginRes.last_name,
-      password: loginRes.password,
-      updated_at: loginRes.updated_at.toISOString(),
       username: loginRes.username,
     });
   });
