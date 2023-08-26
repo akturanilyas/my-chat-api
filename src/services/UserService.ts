@@ -13,7 +13,7 @@ export class UserService {
     return user;
   };
 
-  getSelf = async (token?: string) => {
+  public getSelf = async (token?: string) => {
     const id = getUserIdByToken(token || global.token);
 
     if (!id) throw new UserNotFoundException();
@@ -25,7 +25,7 @@ export class UserService {
     return user;
   };
 
-  searchUsers = async ({ name }: { name?: string }): Promise<Array<User>> => {
+  public searchUsers = async ({ name }: { name?: string }): Promise<Array<User>> => {
     const users = await databaseService.source
       .getRepository(User)
       .createQueryBuilder('users')

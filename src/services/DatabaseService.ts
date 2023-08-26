@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import { ormConfig, testOrmConfig } from '../config/ormConfig';
 
 export class DatabaseService {
-  source: DataSource;
+  public source: DataSource;
 
   public async initialize(): Promise<void> {
     this.source = new DataSource(ormConfig);
@@ -15,9 +15,7 @@ export class DatabaseService {
       await this.source.initialize();
       console.log(`In memory Db initialized`);
     } catch (err) {
-      console.error(
-        `dbConnectionManager - error initializing db. Error: ${(err as Error).message}`,
-      );
+      console.error(`Error: ${(err as Error).message}`);
     }
   }
 

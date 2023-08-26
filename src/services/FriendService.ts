@@ -5,7 +5,7 @@ import { FriendRequestNotFound } from '../exceptions/friend/FriendRequestNotFoun
 import { FriendRequestAlreadyExist } from '../exceptions/friend/FriendRequestAlreadyExist';
 
 export class FriendService {
-  addFriend = async (userId: string) => {
+  public addFriend = async (userId: string) => {
     const request = await Friend.findOneBy({
       user_id: global.userId,
       receiver_id: userId,
@@ -34,7 +34,7 @@ export class FriendService {
     return { friendRequest, targetRequest };
   };
 
-  removeFriend = async (userId: string) => {
+  public removeFriend = async (userId: string) => {
     const { friendRequest, targetRequest } = await this.findFriendsRequests({
       userId,
       status: FriendStatus.SENT,
@@ -46,7 +46,7 @@ export class FriendService {
     return { friendRequest, targetRequest };
   };
 
-  acceptFriend = async (id: string) => {
+  public acceptFriend = async (id: string) => {
     const { friendRequest, targetRequest } = await this.findFriendsRequests({
       id,
       status: FriendStatus.RECEIVED,
@@ -64,7 +64,7 @@ export class FriendService {
     };
   };
 
-  rejectFriend = async (id: string) => {
+  public rejectFriend = async (id: string) => {
     const { friendRequest, targetRequest } = await this.findFriendsRequests({
       id,
       status: FriendStatus.RECEIVED,
@@ -81,7 +81,7 @@ export class FriendService {
     return friendRequest;
   };
 
-  findFriendsRequests = async ({
+  public findFriendsRequests = async ({
     id,
     userId: user_id,
     status,
@@ -114,7 +114,7 @@ export class FriendService {
     return { friendRequest, targetRequest };
   };
 
-  getFriendRequests = async () => {
+  public getFriendRequests = async () => {
     const requests = await Friend.find({
       where: { receiver_id: global.userId, status: FriendStatus.RECEIVED },
       relations: { receiver: true, requester: true },
@@ -123,7 +123,7 @@ export class FriendService {
     return requests;
   };
 
-  getFriends = async ({ name }: { name?: string }) => {
+  public getFriends = async ({ name }: { name?: string }) => {
     const friends = await Friend.find({
       where: {
         user_id: global.userId,

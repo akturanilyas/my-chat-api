@@ -6,7 +6,7 @@ import { LoginResource } from '../resources/auth/LoginResource';
 import { UserNotFoundException } from '../exceptions/user/UserNotFoundException';
 
 export default class AuthController extends AbstractController {
-  static async register(req: Request): Promise<RegisterResource> {
+  public static async register(req: Request): Promise<RegisterResource> {
     const user = await new AuthService().register({
       user: { ...req.body },
     });
@@ -14,7 +14,7 @@ export default class AuthController extends AbstractController {
     return new RegisterResource({ resource: user, statusCode: 201 });
   }
 
-  static async loginUser(req: Request): Promise<LoginResource> {
+  public static async loginUser(req: Request): Promise<LoginResource> {
     const service = new AuthService();
 
     let user;

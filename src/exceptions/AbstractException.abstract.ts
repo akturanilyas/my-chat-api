@@ -1,8 +1,8 @@
 export abstract class AbstractException extends Error {
-  type: string | null = null;
-  status: number;
+  public type: string | null = null;
+  public status: number;
 
-  constructor(message: string | null = null, status = 500) {
+  public constructor(message: string | null = null, status = 500) {
     super(message || 'HTTP error');
     this.status = status;
   }

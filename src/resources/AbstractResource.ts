@@ -5,7 +5,7 @@ export abstract class AbstractResource {
 
   public data?: object;
 
-  constructor({
+  public constructor({
     statusCode,
     message,
     resource,
@@ -19,7 +19,7 @@ export abstract class AbstractResource {
     this.message = message || '';
   }
 
-  abstract toJson(resource: object): object | null;
+  public abstract toJson(resource: object): object | null;
 
   private toArray = (obj: object): Array<string> => Object.keys(obj).map(k => obj[k]);
 }

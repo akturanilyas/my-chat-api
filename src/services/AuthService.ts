@@ -10,7 +10,7 @@ import { serializeToken } from '../utils/commonUtil';
 import { UnauthorizedException } from '../exceptions/user/UnauthorizedException';
 
 export class AuthService {
-  async register({ user }: { user: RegisterInterface }): Promise<User> {
+  public async register({ user }: { user: RegisterInterface }): Promise<User> {
     const userWithEmail: User | null = await User.findOne({
       where: { email: user.email },
     });
@@ -28,7 +28,13 @@ export class AuthService {
     return registeredUser;
   }
 
-  login = async ({ username, password }: { username: string; password: string }) => {
+  public login = async ({
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+  }) => {
     const user = await User.findOneBy({ username });
 
     if (!user) throw new UserNotFoundException();
