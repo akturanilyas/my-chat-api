@@ -37,9 +37,9 @@ const generateMethodFunction =
 
     const resourceClass = await route.handler(req, res, next).catch(next);
 
-    return res
-      .status((resourceClass as AbstractResource).statusCode)
-      .json((resourceClass as AbstractResource).data);
+    if (resourceClass instanceof AbstractResource) {
+      res.status(resourceClass.statusCode).json(resourceClass.data);
+    }
   };
 
 const buildController = async (app: Express) => {

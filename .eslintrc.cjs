@@ -66,6 +66,7 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     'no-unreachable': 'error',
     'no-underscore-dangle': 'off',
+    'consistent-return': 'off',
     'newline-before-return': 'error'
   }
 };

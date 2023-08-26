@@ -2,5 +2,5 @@ import { AbstractException } from '../AbstractException.abstract';
 
 export class UserAlreadyExistsException extends AbstractException {
   status = 409;
-  message = 'User not found';
+  message = 'User already exists';
 }
